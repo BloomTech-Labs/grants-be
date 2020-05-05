@@ -106,4 +106,9 @@ dist
 # My additions
 notes.md 
 
+# other
+.DS_Store
+.vscode/
+mydb.dump
+
 
