@@ -5,7 +5,10 @@ module.exports = {
     find,
     findBy,
     findById,
+    findByUserType,
+    findByEmail,
     getItemsByUserId,
+    update,
     deleteUser,
 };
 
@@ -33,10 +36,19 @@ async function add(user) {
     return findById(id);
 }
 
+// resolves to a single user or null
 function findById(id) {
     return db("users").where({ id }).first();
 }
+// function to get all users by type
+function findByUserType(type) {
+    return DB("users").where({ user_type: type });
+}
 
+//function to find User by email and return id
+function findByEmail(userEmail) {
+    return DB("users").where({ email: userEmail }).select("id", "user_type");
+}
 function deleteUser(id) {
     return db("users").where({ id }).del();
 }
