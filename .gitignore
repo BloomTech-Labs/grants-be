@@ -110,5 +110,5 @@ notes.md
 .DS_Store
 .vscode/
 mydb.dump
-
+.sql
 
