@@ -12,6 +12,13 @@ function findApplicantProfileById(id) {
     .first();
 }
 
+//returns applicant profile by dynamic filter
+function findApplicantProfileBy(filter) {
+  return db('applicant_profiles')
+    .where(filter)
+    .first();
+}
+
 //updates data on applicant user profile
 function updateApplicantProfile(changes, id) {
   return db('applicant_profiles')
@@ -23,5 +30,6 @@ function updateApplicantProfile(changes, id) {
 module.exports = {
   findApplicantProfiles,
   findApplicantProfileById,
+  findApplicantProfileBy,
   updateApplicantProfile
 }
