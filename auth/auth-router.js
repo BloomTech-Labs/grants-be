@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const middleware = require("./middleware.js");
 const createToken = require("./createToken.js");
 
-const Users = require("../users/writersModels");
+const Users = require("../users/writer_profiles/writersProfileModel");
 
 module.exports = router;
 
