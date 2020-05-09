@@ -55,3 +55,7 @@ router.delete("/:id", restricted, checkWriterId, (req, res) => {
             res.status(500).json(err);
         });
 });
+
+// *** WRITER SERVICES OFFERED ROUTER ***
+
+router.get('/')

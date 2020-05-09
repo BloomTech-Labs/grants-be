@@ -45,7 +45,7 @@ function deleteWriteProfile(id) {
 }
 
 
-// *** WRITER PROFILE SERVICES OFFERED HELPER FUNCTIONS ***
+// *** WRITER SERVICES OFFERED HELPER FUNCTIONS ***
 
 //returns list of all writer services currently in the database
 function findWriterServices() {
