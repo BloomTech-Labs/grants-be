@@ -60,8 +60,8 @@ function findWriterServicesById(writer_profile_id) {
 
 //add new service to writer profile, returns updated list of writer services.
 async function addWriterService(service) {
-  const [writer_id] = await db('writer_services_offered').insert(service, "writer_id");
-  return findWriterServicesById(writer_id);
+  const [writer_profile_id] = await db('writer_services_offered').insert(service, "writer_profile_id");
+  return findWriterServicesById(writer_profile_id);
 }
 
 //updates existing writer service on writer profile
