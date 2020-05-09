@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const middleware = require("./middleware.js");
+const middleware = require("./middleware/verifyWriterId.js");
 const createToken = require("./createToken.js");
 
-const Users = require("../users/writersModels");
+const Users = require("../users/for_both_user_types/bothUserTypeModels");
 
 module.exports = router;
 
