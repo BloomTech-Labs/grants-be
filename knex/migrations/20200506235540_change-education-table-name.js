@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
   return knex.schema
-    .renameTable('educaton', 'writer_educations');
+    .renameTable('education', 'writer_educations');
 };
 
 exports.down = function(knex) {
