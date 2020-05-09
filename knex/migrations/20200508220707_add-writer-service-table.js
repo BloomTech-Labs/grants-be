@@ -1,6 +1,7 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('writer_services_offered', tbl => {
+    tbl.increments();
     tbl.integer('writer_profile_id')
       .unsigned()
       .references('writer_profiles.id')
