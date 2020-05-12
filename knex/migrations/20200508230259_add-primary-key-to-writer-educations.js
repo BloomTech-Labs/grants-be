@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  knex.schema.table('writer_educations', tbl => {
+  return knex.schema.table('writer_educations', tbl => {
     tbl.increments();
   })
 };
