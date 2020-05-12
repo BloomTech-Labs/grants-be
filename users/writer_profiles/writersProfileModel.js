@@ -6,6 +6,11 @@ module.exports = {
     findWriterProfileById,
     updateWriterProfile,
     deleteWriteProfile,
+    addWriterService,
+    updateWriterService,
+    deleteWriterService,
+    findWriterServicesById,
+    findWriterServices
 };
 
 //returns all writers user type profiles
@@ -37,4 +42,39 @@ function updateWriterProfile(changes, id) {
 //function to delete a writer user profile
 function deleteWriteProfile(id) {
     return db("writer_profiles").where({ id }).del();
+}
+
+
+// *** WRITER SERVICES OFFERED HELPER FUNCTIONS ***
+
+//returns list of all writer services currently in the database
+function findWriterServices() {
+  return db('writer_services_offered');
+}
+
+//returns writer services for specific writer profile
+function findWriterServicesById(writer_profile_id) {
+  return db('writer_services_offered')
+    .where({ writer_profile_id });
+}
+
+//add new service to writer profile, returns updated list of writer services.
+async function addWriterService(service) {
+  const [writer_profile_id] = await db('writer_services_offered').insert(service, "writer_profile_id");
+  return findWriterServicesById(writer_profile_id);
+}
+
+//updates existing writer service on writer profile
+function updateWriterService(changes, writer_profile_id) {
+  return db('writer_services_offered')
+    .where({ writer_profile_id })
+    .first()
+    .update(changes);
+}
+
+//deletes existing writer service on writer profile
+function deleteWriterService(service_id) {
+  return db('writer_services_offered')
+    .where('id', service_id)
+    .del();
 }
