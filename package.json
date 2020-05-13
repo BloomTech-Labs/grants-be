@@ -4,7 +4,7 @@
   "description": "granted-be",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js",
+    "server": "run-script nodemon index.js",
     "start": "node index.js",
     "test": "cross-env BD_ENV=testing jest --watch --verbose"
   },
