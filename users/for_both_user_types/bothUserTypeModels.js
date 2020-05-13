@@ -22,10 +22,10 @@ function findById(id) {
 
 // function to get all users by type
 function findByUserType(type) {
-    return DB("users").where({ user_type: type });
+    return db("users").where({ user_type: type });
 }
 
 //function to find User by email and return id
 function findByEmail(userEmail) {
-    return DB("users").where({ email: userEmail }).select("id", "user_type");
+    return db("users").where({ email: userEmail }).select("id", "user_type");
 }
