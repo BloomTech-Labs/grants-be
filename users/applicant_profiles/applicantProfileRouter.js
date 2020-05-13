@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const Applicants = require('./applicantProfileModel.js');
+const checkApplicantId = require('../../auth/middleware/verifyApplicantId.js');
+const restricted = require('../../auth/middleware/restricted.js');
 
 //GET all applicant profiles
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
 
   Applicants.findApplicantProfiles()
     .then(profiles => {
@@ -17,7 +19,7 @@ router.get('/', (req, res) => {
 });
 
 //GET specific applicant by profile id
-router.get('/:profileId', (req, res) => {
+router.get('/:profileId', checkApplicantId, (req, res) => {
   
   Applicants.findApplicantProfileById()
     .then(profile => {
@@ -32,7 +34,7 @@ router.get('/:profileId', (req, res) => {
 });
 
 //PUT update applicant profile info
-router.put('/:profileId', (req, res) => {
+router.put('/:profileId', checkApplicantId, (req, res) => {
   
   const { profileId } = req.params;
   const changes = req.body;
@@ -51,3 +53,4 @@ router.put('/:profileId', (req, res) => {
     });
 });
 
+module.exports = router;
