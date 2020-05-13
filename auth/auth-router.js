@@ -17,6 +17,7 @@ router.post("/register", (req, res) => {
     if (user_type === "writers" || user_type === "applicant") {
         Users.add(user)
             .then((user) => {
+                console.log("Added a user", user);
                 const { id, first_name, last_name, email, user_type } = user;
                 res.status(201).json({
                     id,
@@ -27,6 +28,7 @@ router.post("/register", (req, res) => {
                 });
             })
             .catch((error) => {
+                console.log(error);
                 res.status(500).json(error);
             });
     } else {
