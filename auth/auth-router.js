@@ -18,11 +18,9 @@ router.post("/register", (req, res) => {
         Users.add(user)
             .then((user) => {
                 console.log("Added a user", user);
-                const { id, first_name, last_name, email, user_type } = user;
+                const { id, email, user_type } = user;
                 res.status(201).json({
                     id,
-                    first_name,
-                    last_name,
                     email,
                     user_type,
                 });
@@ -50,7 +48,7 @@ router.post("/login", (req, res) => {
                 console.log(token);
 
                 res.status(200).json({
-                    message: `Welcome ${user.first_name}!`,
+                    message: `Welcome Back!`,
                     token,
                 });
             } else if (user && user.password === "Testing") {
@@ -58,7 +56,7 @@ router.post("/login", (req, res) => {
                 console.log(token);
 
                 res.status(200).json({
-                    message: `Welcome ${user.first_name}!`,
+                    message: `Welcome Back!`,
                     token,
                 });
             } else {
