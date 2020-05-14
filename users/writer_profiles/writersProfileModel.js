@@ -29,7 +29,7 @@ function findWritersProfile() {
 function findWriterProfileById(id) {
     return db("writer_profiles").where({ id }).first();
 }
-//returns writer a  profile by filter
+//returns  a  writer profile by filter
 function findWriterProfilBy(filter) {
     return db("writer_profiles").where(filter).first();
 }
