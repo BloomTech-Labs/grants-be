@@ -4,7 +4,7 @@ module.exports = {
     add,
     findById,
     findByUserType,
-    findByEmail,
+    findBy,
 };
 
 //function to add a new user
@@ -25,7 +25,7 @@ function findByUserType(type) {
     return db("users").where({ user_type: type });
 }
 
-//function to find User by email and return id
-function findByEmail(userEmail) {
-    return db("users").where({ email: userEmail }).select("id", "user_type");
+//retur user profile by filter
+function findBy(filter) {
+    return db("users").where(filter);
 }
