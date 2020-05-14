@@ -14,7 +14,7 @@ router.post("/register", (req, res) => {
     const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
     user.password = hash;
     const { user_type } = req.body;
-    if (user_type === "writers" || user_type === "applicant") {
+    if (user_type === "writer" || user_type === "applicant") {
         Users.add(user)
             .then((user) => {
                 console.log("Added a user", user);
@@ -32,7 +32,9 @@ router.post("/register", (req, res) => {
                 res.status(500).json(error);
             });
     } else {
-        res.send(`You have to choose your user type.`);
+        res.status(400).json({
+            message: "You have to choose your user type"
+        });
     }
 });
 
