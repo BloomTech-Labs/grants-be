@@ -4,9 +4,18 @@
   "description": "granted-be",
   "main": "index.js",
   "scripts": {
-    "server": "run-script nodemon index.js",
+    "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env BD_ENV=testing jest --watch --verbose"
+    "test": "jest --detectOpenHandles --forceExit",
+    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/__tests__/**",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ]
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,4 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/5c0e781b8d1d6d032057/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/grants-be/maintainability)
-
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5c0e781b8d1d6d032057/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/grants-be/test_coverage)
 
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
@@ -10,7 +9,7 @@
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### 1️⃣ Backend delpoyed at [Herkou.com](https://grantedbackend.herokuapp.com/) <br>
 
 ## 1️⃣ Getting started
 
@@ -19,9 +18,9 @@ To get the server running locally:
 🚫 adjust these scripts to match your project
 
 - Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- **npm install** to install all required dependencies
+- **npm server** to start the local server
+- **npm test** to start server using testing environment
 
 ### Backend framework goes here
 
