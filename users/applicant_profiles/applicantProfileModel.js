@@ -24,6 +24,8 @@ async function addApplicantProfile(id) {
 
   const defaultData = {
     applicant_id: id,
+    first_name: "",
+    last_name: "",
     city: "",
     state: "",
     country: "",
