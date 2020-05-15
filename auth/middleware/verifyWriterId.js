@@ -1,12 +1,12 @@
 const Writers = require("../../users/writer_profiles/writersProfileModel");
 
 module.exports = function checkWriterId(req, res, next) {
-    const id = req.params.id;
+    const { id } = req.params;
 
     Writers.findWriterProfileById(id)
         .then((writer) => {
             if (writer) {
-                req.item = writer;
+                req.profile = writer;
                 next();
             } else {
                 res.status(404).json({
@@ -15,6 +15,9 @@ module.exports = function checkWriterId(req, res, next) {
             }
         })
         .catch((err) => {
-            res.status(500).json(err);
+            res.status(500).json({
+              message: "Failed to retrieve writer profile",
+              error: err
+            });
         });
 };

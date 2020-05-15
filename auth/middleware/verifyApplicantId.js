@@ -11,7 +11,7 @@ function checkApplicantId(req, res, next) {
         next();
       }else {
         res.status(404).json({
-          message: "Profile with thiis id does not exist."
+          message: "The applicant profile with this ID does not exist."
         })
       }
     })
