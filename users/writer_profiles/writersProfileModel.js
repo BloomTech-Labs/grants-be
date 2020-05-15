@@ -16,14 +16,7 @@ module.exports = {
 
 //returns all writers user type profiles
 function findWritersProfile() {
-    const query = db("writer_profiles").select(
-        "id",
-        "first_name",
-        "last_name",
-        "email",
-        "user_type"
-    );
-    return query;
+    return db('writer_profiles');
 }
 
 //returns a specific writer  profile or null
