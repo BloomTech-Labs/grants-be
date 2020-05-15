@@ -14,7 +14,7 @@ router.get("/", restricted, (req, res) => {
 });
 
 //get a writer  profile by id
-router.get("/:id", checkWriterId, (req, res) => {
+router.get("/:id", (req, res) => {
     const id = req.params.id;
 
     Writers.findWriterProfileById(id)
@@ -28,7 +28,7 @@ router.get("/:id", checkWriterId, (req, res) => {
 });
 
 //put update a writer profile info
-router.put("/:id", restricted, checkWriterId, (req, res) => {
+router.put("/:id", restricted, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
 
@@ -42,7 +42,7 @@ router.put("/:id", restricted, checkWriterId, (req, res) => {
 });
 
 //delete a writer profile  by id
-router.delete("/:id", restricted, checkWriterId, (req, res) => {
+router.delete("/:id", restricted, (req, res) => {
     const id = req.params.id;
 
     Writers.deleteWriteProfile(id)
