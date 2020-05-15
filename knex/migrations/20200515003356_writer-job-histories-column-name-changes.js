@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  return knex.schema.table("writer_educations", tbl => {
+  return knex.schema.table("work_histories", tbl => {
     tbl.dropColumn("employer");
     tbl.dropColumn("job_title");
     tbl.dropColumn("job_description");
@@ -11,7 +11,7 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.table("writer_educations", tbl => {
+  return knex.schema.table("work_histories", tbl => {
     tbl.dropColumn("responsibilities");
     tbl.dropColumn("position");
     tbl.dropColumn("company");
