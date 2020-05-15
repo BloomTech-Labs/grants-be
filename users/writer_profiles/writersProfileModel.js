@@ -40,8 +40,6 @@ async function addWriterProfile(id) {
 
   const defaultData = {
     writer_id: id,
-    first_name: " ",
-    last_name: " ",
     city: " ",
     state: " ",
     country: " ",

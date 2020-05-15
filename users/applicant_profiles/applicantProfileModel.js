@@ -24,17 +24,14 @@ async function addApplicantProfile(id) {
 
   const defaultData = {
     applicant_id: id,
-    //first_name: " ",
-    //last_name: " ",
-    //city: " ",
-    //state: " ",
-    //country: " ",
-    //zip: " ",
+    city: " ",
+    state: " ",
+    country: " ",
+    zip: " ",
     bio: " ",
     org_name: " ",
     sector: " ",
-    website_url: " ",
-    contact_name: " "
+    website_url: " "
   }
 
   const [profileId] = await db('applicant_profiles').insert(defaultData, "id");
