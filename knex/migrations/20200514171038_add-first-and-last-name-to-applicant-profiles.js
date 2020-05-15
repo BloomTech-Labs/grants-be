@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  return knex.schema.table("applican_profiles", tbl => {
+  return knex.schema.table("applicant_profiles", tbl => {
     tbl.varchar("first_name");
     tbl.varchar("last_name");
     tbl.varchar("city");
