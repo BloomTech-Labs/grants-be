@@ -30,15 +30,15 @@ async function addApplicantProfile(id) {
     //state: " ",
     //country: " ",
     //zip: " ",
-    bio: "introduce yourself",
+    bio: " ",
     org_name: " ",
-    sector: "sector",
+    sector: " ",
     website_url: " ",
-    contact_name: "name"
+    contact_name: " "
   }
 
   const [profileId] = await db('applicant_profiles').insert(defaultData, "id");
-  console.log(`base user profile created for user number ${defaultData.applicant_id}`);
+  console.log(`base user profile created for user ID: ${defaultData.applicant_id}`);
   return findApplicantProfileById(profileId);
 }
 
