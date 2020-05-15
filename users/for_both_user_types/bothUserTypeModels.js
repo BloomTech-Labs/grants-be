@@ -12,9 +12,9 @@ module.exports = {
 async function add(user) {
     const [id] = await db("users").insert(user, "id");
     if(user.user_type == "applicant") {
-      Applicants.addApplicantProfile();
+      Applicants.addApplicantProfile(id);
     }
-    
+
     return findById(id);
 }
 

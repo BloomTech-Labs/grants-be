@@ -19,26 +19,27 @@ function findApplicantProfileBy(filter) {
     .first();
 }
 
-//adds new applicant profile
-function addApplicantProfile() {
+//adds new applicant profile. This is only to be used during the onboarding process, function is inserted into add function in bothUserTypeModel file.
+async function addApplicantProfile(id) {
 
   const defaultData = {
-    applicant_id: user.id,
-    first_name: " ",
-    last_name: " ",
-    city: " ",
-    state: " ",
-    country: " ",
-    zip: " ",
+    applicant_id: id,
+    //first_name: " ",
+    //last_name: " ",
+    //city: " ",
+    //state: " ",
+    //country: " ",
+    //zip: " ",
     bio: "introduce yourself",
     org_name: " ",
     sector: "sector",
-    website_url: " "
+    website_url: " ",
+    contact_name: "name"
   }
 
-  db('applicant_profiles').insert(defaultData);
-
-  return("base user profile created")
+  const [profileId] = await db('applicant_profiles').insert(defaultData, "id");
+  console.log(`base user profile created for user number ${defaultData.applicant_id}`);
+  return findApplicantProfileById(profileId);
 }
 
 //updates data on applicant user profile
