@@ -28,7 +28,7 @@ router.get('/:profileId', checkApplicantId, (req, res) => {
 });
 
 //PUT update applicant profile info
-router.put('/:profileId', checkApplicantId, (req, res) => {
+router.put('/:profileId', (req, res) => {
   
   const { profileId } = req.params;
   const changes = req.body;
@@ -46,28 +46,5 @@ router.put('/:profileId', checkApplicantId, (req, res) => {
       });
     });
 });
-
-// function checkApplicantId(req, res, next) {
-//   const { profileId } = req.params;
-
-//   Applicants.findApplicantProfileById(profileId)
-//     .then(profile => {
-
-//       if(profile) {
-//         req.profile = profile;
-//         next();
-//       }else {
-//         res.status(404).json({
-//           message: "Profile with thiis id does not exist."
-//         })
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).json({
-//         message: "Failed to retrieve applicant profile",
-//         error: err
-//       });
-//     });
-// };
 
 module.exports = router;
