@@ -40,13 +40,13 @@ async function addWriterProfile(id) {
 
   const defaultData = {
     writer_id: id,
-    city: " ",
-    state: " ",
-    country: " ",
-    zip: " ",
-    bio: " ",
-    sector: " ",
-    website_url: " "
+    city: "",
+    state: "",
+    country: "",
+    zip: "",
+    bio: "",
+    sector: "",
+    website_url: ""
   }
 
   const [profileId] = await db('writer_profiles').insert(defaultData, "id");
