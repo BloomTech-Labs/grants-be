@@ -4,6 +4,7 @@ module.exports = {
     findWritersProfile,
     findWriterProfilBy,
     findWriterProfileById,
+    addWriterProfile,
     updateWriterProfile,
     deleteWriteProfile,
     addWriterService,
@@ -32,6 +33,25 @@ function findWriterProfileById(id) {
 //returns  a  writer profile by filter
 function findWriterProfilBy(filter) {
     return db("writer_profiles").where(filter).first();
+}
+
+//adds new writer profile. This is only to be used during the onboarding process, function is inserted into add function in bothUserTypeModel file.
+async function addWriterProfile(id) {
+
+  const defaultData = {
+    writer_id: id,
+    city: "",
+    state: "",
+    country: "",
+    zip: "",
+    bio: "",
+    sector: "",
+    website_url: ""
+  }
+
+  const [profileId] = await db('writer_profiles').insert(defaultData, "id");
+  console.log(`base user profile created for user ID: ${defaultData.writer_id}`);
+  return findWriterProfileById(profileId);
 }
 
 //updates data on a writer user profile

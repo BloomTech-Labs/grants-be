@@ -1,4 +1,6 @@
 const db = require("../../knex/knex");
+const Applicants = require("../applicant_profiles/applicantProfileModel");
+const Writers = require("../writer_profiles/writersProfileModel");
 
 module.exports = {
     add,
@@ -10,6 +12,11 @@ module.exports = {
 //function to add a new user
 async function add(user) {
     const [id] = await db("users").insert(user, "id");
+    if(user.user_type == "applicant") {
+      Applicants.addApplicantProfile(id);
+    }else if(user.user_type == "writer") {
+      Writers.addWriterProfile(id);
+    }
 
     return findById(id);
 }
