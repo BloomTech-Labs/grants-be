@@ -19,7 +19,7 @@ router.get('/', restricted, (req, res) => {
 });
 
 //GET specific applicant by profile id
-router.get('/:profileId', checkApplicantId, (req, res) => {
+router.get('/:profileId', (req, res) => {
   
   Applicants.findApplicantProfileById()
     .then(profile => {
@@ -34,7 +34,7 @@ router.get('/:profileId', checkApplicantId, (req, res) => {
 });
 
 //PUT update applicant profile info
-router.put('/:profileId', checkApplicantId, (req, res) => {
+router.put('/:profileId', (req, res) => {
   
   const { profileId } = req.params;
   const changes = req.body;
