@@ -6,16 +6,22 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "jest --detectOpenHandles --forceExit",
-    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
+    "test": "cross-env DB_ENV=testing jest --detectOpenHandles --forceExit || true",
+    "coverage": "cross-env DB_ENV=testing jest --coverage --detectOpenHandles --forceExit || true"
   },
   "jest": {
     "collectCoverageFrom": [
       "**/*.js",
       "!**/__tests__/**",
       "!**/node_modules/**",
-      "!**/vendor/**"
-    ]
+      "!**/vendor/**",
+      "!**/knex/**",
+      "!**/sorter.js",
+      "!**/prettify.js",
+      "!**/grants-be/coverage/lcov-report/**",
+      "!**/block-navigation.js"
+    ],
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",

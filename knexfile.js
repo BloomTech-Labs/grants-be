@@ -11,6 +11,16 @@ module.exports = {
             directory: __dirname + "/knex/seeds",
         },
     },
+    testing: {
+      client: "pg",
+      connection: process.env.DATABASE_URL,
+      migrations: {
+        directory: __dirname + "/knex/migrations",
+      },
+      seeds: {
+        directory: __dirname + "knex/seeds",
+      }
+    },
     staging: {
         client: "pg",
         connection: process.env.DATABASE_URL,
