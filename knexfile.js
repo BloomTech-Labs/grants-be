@@ -1,4 +1,4 @@
-// Update with your config settings.
+require('dotenv').config();
 
 module.exports = {
     development: {
@@ -13,7 +13,7 @@ module.exports = {
     },
     testing: {
       client: "pg",
-      connection: process.env.DATABASE_URL,
+      connection: process.env.TEST_DATABASE_URL,
       migrations: {
         directory: __dirname + "/knex/migrations",
       },

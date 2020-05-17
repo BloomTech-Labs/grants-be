@@ -1,10 +1,10 @@
 const db = require('../knex/knex.js');
 const Users = require('../users/for_both_user_types/bothUserTypeModels.js');
-const jwt = require('jsonwebtoken');
-const secrets = require('../auth/secrets.js');
 
 beforeEach(async () => {
   await db('users').truncate();
+  await db('writer_profiles').truncate();
+  await db('applicant_profiles').truncate();
 });
 
 describe('user onboarding and registration queries', () => {
@@ -21,7 +21,7 @@ describe('user onboarding and registration queries', () => {
         user_type: 'applicant'
       });
       await Users.add({
-        email: 'coolemail@gmail.com',
+        email: 'coolestemail@gmail.com',
         password: 'bestpassword',
         user_type: 'writer'
       });
