@@ -14,17 +14,8 @@ router.get("/", restricted, (req, res) => {
 });
 
 //get a writer  profile by id
-router.get("/:id", (req, res) => {
-    const id = req.params.id;
-
-    Writers.findWriterProfileById(id)
-        .then((profile) => {
-            const { first_name, last_name, email, user_type } = profile;
-            res.status(200).json({ first_name, last_name, email, user_type });
-        })
-        .catch((err) => {
-            res.status(500).json(err);
-        });
+router.get("/:id", checkWriterId, (req, res) => {
+    res.status(200).json(req.profile);
 });
 
 //put update a writer profile info

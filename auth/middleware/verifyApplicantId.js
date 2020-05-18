@@ -1,20 +1,26 @@
 const Applicants = require("../../users/applicant_profiles/applicantProfileModel.js");
 
-module.exports = function checkApplicantId(req, res, next) {
-    const id = req.params.id;
+function checkApplicantId(req, res, next) {
+  const { profileId } = req.params;
 
-    Applicants.findApplicantProfileById(id)
-        .then((applicant) => {
-            if (applicant) {
-                req.item = applicant;
-                next();
-            } else {
-                res.status(404).json({
-                    message: "The applicant profile with this ID doesn't exist.",
-                });
-            }
+  Applicants.findApplicantProfileById(profileId)
+    .then(profile => {
+
+      if(profile) {
+        req.profile = profile;
+        next();
+      }else {
+        res.status(404).json({
+          message: "The applicant profile with this ID does not exist."
         })
-        .catch((err) => {
-            res.status(500).json(err);
-        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to retrieve applicant profile",
+        error: err
+      });
+    });
 };
+
+module.exports = checkApplicantId;
