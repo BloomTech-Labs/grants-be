@@ -2,7 +2,8 @@ const router = require("express").Router();
 
 const Writers = require("./writersProfileModel");
 const restricted = require("../../auth/middleware/restricted");
-const checkWriterId = require("../../auth/middleware/verifyWriterId");
+const checkUserId = require("../../auth/middleware/verifyUserId");
+
 
 //get all writers profiles
 router.get("/", restricted, (req, res) => {
@@ -14,21 +15,39 @@ router.get("/", restricted, (req, res) => {
 });
 
 //get a writer  profile by id
-router.get("/:id", checkWriterId, (req, res) => {
-    res.status(200).json(req.profile);
+router.get("/:userId", checkUserId, (req, res) => {
+  const {userId} = req.params;
+
+  Writers.findWriterProfileById(userId)
+    .then(profile => {
+      res.status(200).json({
+        profile
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "there's been an issue getting user info",
+        error: err
+      })
+    })
 });
 
 //put update a writer profile info
-router.put("/:id", restricted, (req, res) => {
-    const id = req.params.id;
+router.put("/:userId", restricted, (req, res) => {
+    const { userId } = req.params;
     const changes = req.body;
 
-    Writers.updateWriterProfile(id, changes)
-        .then((updated) => {
-            res.status(201).json(updated);
+    Writers.updateWriterProfile(changes, userId)
+        .then(updated => {
+            res.status(201).json({
+              recordsUpdated: updated
+            })
         })
-        .catch((err) => {
-            res.status(500).json(err);
+        .catch(err => {
+            res.status(500).json({
+              message: "There was an issue updating writer profile",
+              error: err
+            });
         });
 });
 

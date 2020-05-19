@@ -6,9 +6,9 @@ function findApplicantProfiles() {
 }
 
 //returns specific applicant profile
-function findApplicantProfileById(id) {
+function findApplicantProfileById(applicant_id) {
   return db('applicant_profiles')
-    .where({ id })
+    .where({ applicant_id })
     .first();
 }
 
@@ -42,9 +42,9 @@ async function addApplicantProfile(id) {
 }
 
 //updates data on applicant user profile
-function updateApplicantProfile(changes, id) {
+function updateApplicantProfile(changes, applicant_id) {
   return db('applicant_profiles')
-    .where({ id })
+    .where({ applicant_id })
     .first()
     .update(changes);
 }
