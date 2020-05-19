@@ -119,18 +119,50 @@ function findWriterEducations() {
   return db("writer_educations");
 }
 
-//update existing writer education data
-function updateWriterEducation(changes, writer_id) {
+//update existing writer education data based on education data primary key id (not user id)
+function updateWriterEducation(changes, id) {
   return db("writer_educations")
-    .where({ writer_id })
+    .where({ id })
     .first()
     .update(changes);
 }
 
-//deletes existing writer educate based on education data primary key id (not user id).
+//deletes existing writer educate based on education data primary key id (not user id)
 function deleteWriterEducation(id) {
   return db("writer_educations")
     .where("id", id)
     .del();
 }
 
+// *** WRITER WORK HISTORY HELPER FUNCTIONS ***
+
+//add new work history record to user profile
+async function addWorkHistory(workHistory) {
+  const [writer_id] = await db("work_histories")
+    .insert(
+      workHistory, 
+      "writer_id"
+    );
+    return findWorkHistoryById(writer_id);
+}
+
+//get all work history records for specific writer requires user id in params
+function findWorkHistoryById(writer_id) {
+  return db("work_histories")
+    .where(writer_id);
+}
+
+//update existing work history record, requires work history record id in params
+function updateWorkHistory(changes, id) {
+  return db("work_histories")
+    .where({ id })
+    .first()
+    .update(changes);
+}
+
+//deletes existing work history record, requires work history record id in params
+function deleteWorkHistory(id) {
+  return db("work_histories")
+    .where("id", id)
+    .del();
+}
