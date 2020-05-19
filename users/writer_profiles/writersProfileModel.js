@@ -17,6 +17,10 @@ module.exports = {
     findWriterEducationById,
     updateWriterEducation,
     deleteWriterEducation,
+    addWorkHistory,
+    findWorkHistoryById,
+    updateWorkHistory,
+    deleteWorkHistory
 };
 
 //returns all writers user type profiles

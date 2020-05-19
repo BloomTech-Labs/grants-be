@@ -10,7 +10,7 @@ router.get('/', restricted, (req, res) => {
 
   Applicants.findApplicantProfiles()
     .then(profiles => {
-      res.json(profiles);
+      res.status(200).json(profiles);
     })
     .catch(err => {
       res.status(500).json({
