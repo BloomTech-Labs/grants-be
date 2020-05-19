@@ -91,5 +91,41 @@ function updateWriterService(changes, writer_profile_id) {
 
 //deletes existing writer service on writer profile
 function deleteWriterService(service_id) {
-    return db("writer_services_offered").where("id", service_id).del();
+    return db("writer_services_offered").where("id", service_id)
+    .del();
 }
+
+// *** WRITER EDUCATION HELPER FUNCTIONS *** //
+
+//add new education data
+async function addWriterEducation(eduData) {
+  const [writer_id] = await db("writer_educations").insert(eduData, "writer_id");
+  return findWriterEducationById(writer_id);
+}
+
+//get writer education data by user id
+function findWriterEducationById(writer_id) {
+  return db("writer_educations")
+    .where(writer_id);
+}
+
+//get all writer education data
+function findWriterEducations() {
+  return db("writer_educations");
+}
+
+//update existing writer education data
+function updateWriterEducation(changes, writer_id) {
+  return db("writer_educations")
+    .where({ writer_id })
+    .first()
+    .update(changes);
+}
+
+//deletes existing writer educate based on education data primary key id (not user id).
+function deleteWriterEducation(id) {
+  return db("writer_educations")
+    .where("id", id)
+    .del();
+}
+
