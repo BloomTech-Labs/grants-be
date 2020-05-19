@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Applicants = require('./applicantProfileModel.js');
-const checkApplicantId = require('../../auth/middleware/verifyApplicantId.js');
+const checkUserId = require('../../auth/middleware/verifyUserId.js');
 const mware = require('../../auth/middleware/verifyApplicantId');
 const restricted = require('../../auth/middleware/restricted.js');
 
@@ -20,22 +20,34 @@ router.get('/', restricted, (req, res) => {
     });
 });
 
-//GET specific applicant by profile id
-router.get('/:profileId', checkApplicantId, (req, res) => {
+//GET specific applicant by user Id
+router.get('/:userId', checkUserId, (req, res) => {
+  const {userId} = req.params;
 
-  res.status(200).json(req.profile)
+  Applicants.findApplicantProfileById(userId)
+    .then(profile => {
+      res.status(200).json({
+        profile
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "there's been an issue getting user info",
+        error: err
+      })
+    })
       
 });
 
 //PUT update applicant profile info
-router.put('/:profileId', (req, res) => {
+router.put('/:userId', (req, res) => {
   
-  const { profileId } = req.params;
+  const { userId } = req.params;
   const changes = req.body;
 
-  Applicants.updateApplicantProfile(changes, profileId)
+  Applicants.updateApplicantProfile(changes, userId)
     .then(updated => {
-      res.status(200).json({
+      res.status(201).json({
         recordsUpdated: updated
       })
     })
