@@ -149,6 +149,22 @@ router.delete('/services/:service_id', (req, res) => {
     });
 });
 
+// *** WRITER EDUCATIONS ROUTER *** 
 
+router.post('/edu/:id', (req, res) => {
+
+  const { id } = req.params;
+  const eduData = {
+    writer_id: id,
+    college: req.params,
+    start_date: req.params,
+    end_data: req.params,
+    still_attending: req.params,
+    degree: req.params
+  }
+
+  Writers.addWriterEducation(eduData)
+  
+})
 
 module.exports = router;

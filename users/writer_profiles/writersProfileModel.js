@@ -12,6 +12,11 @@ module.exports = {
     deleteWriterService,
     findWriterServicesById,
     findWriterServices,
+    addWriterEducation,
+    findWriterEducations,
+    findWriterEducationById,
+    updateWriterEducation,
+    deleteWriterEducation,
 };
 
 //returns all writers user type profiles
@@ -95,7 +100,7 @@ function deleteWriterService(service_id) {
     .del();
 }
 
-// *** WRITER EDUCATION HELPER FUNCTIONS *** //
+// *** WRITER EDUCATION HELPER FUNCTIONS *** 
 
 //add new education data
 async function addWriterEducation(eduData) {
