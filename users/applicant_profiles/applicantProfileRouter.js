@@ -20,20 +20,20 @@ router.get('/', restricted, (req, res) => {
     });
 });
 
-//GET specific applicant by profile id
-router.get('/:profileId', checkApplicantId, (req, res) => {
+//GET specific applicant by user Id
+router.get('/:userId', (req, res) => {
 
   res.status(200).json(req.profile)
       
 });
 
 //PUT update applicant profile info
-router.put('/:profileId', (req, res) => {
+router.put('/:userId', (req, res) => {
   
-  const { profileId } = req.params;
+  const { userId } = req.params;
   const changes = req.body;
 
-  Applicants.updateApplicantProfile(changes, profileId)
+  Applicants.updateApplicantProfile(changes, userId)
     .then(updated => {
       res.status(200).json({
         recordsUpdated: updated
