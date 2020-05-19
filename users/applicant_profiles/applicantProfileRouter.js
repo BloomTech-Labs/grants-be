@@ -47,7 +47,7 @@ router.put('/:userId', (req, res) => {
 
   Applicants.updateApplicantProfile(changes, userId)
     .then(updated => {
-      res.status(201).json({
+      res.status(204).json({
         recordsUpdated: updated
       })
     })

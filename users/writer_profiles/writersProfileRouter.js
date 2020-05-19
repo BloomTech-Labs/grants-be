@@ -39,7 +39,7 @@ router.put("/:userId", restricted, (req, res) => {
 
     Writers.updateWriterProfile(changes, userId)
         .then(updated => {
-            res.status(201).json({
+            res.status(204).json({
               recordsUpdated: updated
             })
         })
@@ -93,7 +93,7 @@ router.get('/services/:id', (req, res) => {
   Writers.findWriterServicesById(id)
     .then(services => {
       if(services) {
-        res.json(pickups);
+        res.json(services);
       }else {
         res.status(200).json({
           message: "This user has no added services offered."
@@ -170,6 +170,7 @@ router.delete('/services/:service_id', (req, res) => {
 
 // *** WRITER EDUCATIONS ROUTER *** 
 
+//add new writer education data
 router.post('/edu/:id', (req, res) => {
 
   const { id } = req.params;
@@ -183,7 +184,76 @@ router.post('/edu/:id', (req, res) => {
   }
 
   Writers.addWriterEducation(eduData)
-  
-})
+  .then(education => {
+    res.status(201).json(education);
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: "Failed to add education history to profile.",
+      error: err
+    });
+  });
+});
+
+//get specific writer's education data by user id
+router.get('/edu/:id', (req, res) => {
+  const { id } = req.params;
+
+  Writers.findWriterEducationById(id)
+    .then(educations => {
+      if(educations) {
+        res.json(educations);
+      }else {
+        res.status(200).json({
+          message: "This user has not added education history."
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to retrieve education history for this user.",
+        error: err
+      });
+    });
+});
+
+//updates existing educationa history record, takes education record id (primary key) in params
+router.put('/edu/:educationId', (req, res) => {
+
+  const { educationId } = req.params;
+  const changes = req.body;
+
+  Writers.updateWriterEducation(changes, educationId)
+    .then(updated => {
+      res.status(204).json({
+        recordsUpdated: updated
+      })
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "There was an issue updating user education history."
+      });
+    });
+});
+
+//deletes existing education record, uses education record id (primary key).
+router.delete('/edu/:educationId', (req, res) => {
+
+  const { educationId } = req.params;
+
+  Writers.deleteWriterEducation(educationId)
+    .then(education => {
+      res.status(200).json({
+        message: "Education history has been deleted."
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to delete education history from user profile",
+        error: err
+      });
+    });
+});
+
 
 module.exports = router;
