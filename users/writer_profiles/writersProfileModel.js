@@ -20,8 +20,8 @@ function findWritersProfile() {
 }
 
 //returns a specific writer  profile or null
-function findWriterProfileById(id) {
-    return db("writer_profiles").where({ id }).first();
+function findWriterProfileById(writer_id) {
+    return db("writer_profiles").where({ writer_id }).first();
 }
 //returns  a  writer profile by filter
 function findWriterProfilBy(filter) {
@@ -51,13 +51,13 @@ async function addWriterProfile(id) {
 }
 
 //updates data on a writer user profile
-function updateWriterProfile(changes, id) {
-    return db("writer_profiles").where({ id }).first().update(changes);
+function updateWriterProfile(changes, writer_id) {
+    return db("writer_profiles").where({ writer_id }).first().update(changes);
 }
 
 //function to delete a writer user profile
-function deleteWriteProfile(id) {
-    return db("writer_profiles").where({ id }).del();
+function deleteWriteProfile(writer_id) {
+    return db("writer_profiles").where({ writer_id }).del();
 }
 
 // *** WRITER SERVICES OFFERED HELPER FUNCTIONS ***
