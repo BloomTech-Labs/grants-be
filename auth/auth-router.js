@@ -50,6 +50,8 @@ router.post("/login", (req, res) => {
                 res.status(200).json({
                     message: `Welcome Back!`,
                     token,
+                    userType:`${user.user_type}`,
+                    userId: `${user.id}`
                 });
             } else if (user && user.password === "Testing") {
                 const token = createToken(user);
@@ -58,6 +60,8 @@ router.post("/login", (req, res) => {
                 res.status(200).json({
                     message: `Welcome Back!`,
                     token,
+                    userType:`${user.user_type}`,
+                    userId: `${user.id}`
                 });
             } else {
                 res.status(401).json({ message: "Invalid Credentials" });
