@@ -11,7 +11,7 @@ To get the server running locally:
 
 - Clone this repo
 - **npm install** to install all required dependencies
-- create .env file for local environmental variables
+- add **.env** file for local environmental variables
 - **npm server** to start the local server
 - **npm test** to start server using testing environment
 
