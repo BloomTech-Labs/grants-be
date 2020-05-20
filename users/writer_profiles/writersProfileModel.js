@@ -2,7 +2,7 @@ const db = require("../../knex/knex");
 
 module.exports = {
     findWritersProfile,
-    findWriterProfilBy,
+    findWriterProfileBy,
     findWriterProfileById,
     addWriterProfile,
     updateWriterProfile,
@@ -24,7 +24,7 @@ function findWriterProfileById(writer_id) {
     return db("writer_profiles").where({ writer_id }).first();
 }
 //returns  a  writer profile by filter
-function findWriterProfilBy(filter) {
+function findWriterProfileBy(filter) {
     return db("writer_profiles").where(filter).first();
 }
 
