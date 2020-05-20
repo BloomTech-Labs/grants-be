@@ -1,137 +1,164 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/5c0e781b8d1d6d032057/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/grants-be/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5c0e781b8d1d6d032057/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/grants-be/test_coverage)
 
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [Herkou.com](https://grantedbackend.herokuapp.com/) <br>
+## 1️⃣ Backend delpoyed at [https://grantedbackend.herokuapp.com/](https://grantedbackend.herokuapp.com/) <br>
 
 ## 1️⃣ Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
 - **npm install** to install all required dependencies
+- create .env file for local environmental variables
 - **npm server** to start the local server
 - **npm test** to start server using testing environment
 
-### Backend framework goes here
+### Framework
 
-🚫 Why did you choose this framework?
-
--    Point One
--    Point Two
--    Point Three
--    Point Four
+-    NodeJS
+-    Express
+-    Postgres
+-    Knex
+-    Jest
+-    Jsonwebtoken
+-    Bcryptjs
 
 ## 2️⃣ Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+#### Auth Routes (base URL + `api/auth`)
 
-#### Organization Routes
+| Method | Endpoint                | Token Required? | Description                                  |
+| ------ | ----------------------- | --------------- | -------------------------------------------- |
+| POST   | `/api/auth/register`    | no              | Adds new user, returns new user info         |
+| POST   | `/api/auth/login`       | no              | Logs in existing user, returns token         |
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+#### Writer Profile Routes (base URL + `api/writers`)
 
-#### User Routes
+| Method | Endpoint                | Token Required?     | Description                              |
+| ------ | ----------------------- | ------------------- | ---------------------------------------- |
+| GET    | `/`                     | yes                 | Returns all writer profiles              |
+| GET    | `/:userId`              | yes                 | Returns specific writer profile          |
+| PUT    | `/:userId`              | yes                 | Updates writer profile                   |
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+#### Applicant Profile Routes (base URL + `api/applicants`)
+
+| Method | Endpoint                | Token Required?     | Description                              |
+| ------ | ----------------------- | ------------------- | ---------------------------------------- |
+| GET    | `/`                     | yes                 | Returns all applicant profiles           |
+| GET    | `/:userId`              | yes                 | Returns specific applicant profile       |
+| PUT    | `/:userId`              | yes                 | Updates applicant profile                |
+                                                  
 
 # Data Model
 
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ ORGANIZATIONS
+#### 2️⃣ USER REGISTRATION
 
 ---
 
 ```
 {
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+  id: UUID autogenerated,
+  email: STRING,
+  password: STRING,
+  user_type: STRING [ 'writer', 'applicant' ]
 }
 ```
 
-#### USERS
+#### WRITER PROFILES
 
 ---
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  id: UUID autogenerated
+  writer_id: INTEGER foreign key in USERS table,
+  first_name: STRING,
+  last_name: STRING,
+  city: STRING,
+  state: STRING,
+  zip: STRING,
+  country: STRING,
+  sector: STRING,
+  website: STRING,
+  bio: STRING
 }
+
+```
+
+#### APPLICANT PROFILES
+
+---
+
+```
+{
+  id: UUID autogenerated
+  applicant_id: INTEGER foreign key in USERS table,
+  first_name: STRING,
+  last_name: STRING,
+  city: STRING,
+  state: STRING,
+  zip: STRING,
+  country: STRING,
+  sector: STRING,
+  website: STRING,
+  bio: STRING,
+  org_name: STRING optional,
+  founding_date: DATE optional
+}
+
 ```
 
 ## 2️⃣ Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+##### Users 
 
-`getOrgs()` -> Returns all organizations
+`add(user)` -> Adds new user, returns new user data
 
-`getOrg(orgId)` -> Returns a single organization by ID
+`findById(id)` -> Returns a single user by ID
 
-`addOrg(org)` -> Returns the created org
+`findByUserType(user_type)` -> Returns a single user by user type
 
-`updateOrg(orgId)` -> Update an organization by ID
+`findBy(filter)` -> Returns a single user by dynamic filter based on database 
 
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
+##### Writer Profiles
 
-`getUser(userId)` -> Returns a single user by user ID
+`findWritersProfile()` -> Returns all writer profiles
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+`findWriterProfileById(writer_id)` -> Returns a single writer by ID
 
-`updateUser(userId, changes object)` -> Updates a single user by ID.
+`findWriterProfileBy(filter)` -> Returns a single user by dynamic filter based on database
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+`addWriterProfile(writer_id)` -> Adds new writer profile for existing writer ID, blank by default.  
+
+`updateWriterProfile(writer_id, updatedData)` -> Update writer profile by writer ID
+
+`deleteWriterProfile(writer_id)` -> Delete writer profile by ID
+
+##### Applicant Profiles
+
+`findApplicantProfiles()` -> Returns all applicant profiles
+
+`findApplicantProfileById(applicant_id)` -> Returns a single writer by ID
+
+`findApplicantProfileBy(filter)` -> Returns a single user by dynamic filter based on database 
+
+`addApplicantProfile(applicant_id)` -> Adds new writer profile for existing writer ID, blank by default.  
+
+`updateApplicantProfile(applicant_id, updatedData)` -> Update writer profile by writer ID
+
 
 ## 3️⃣ Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-
-🚫 These are just examples, replace them with the specifics for your app
     
-    *  STAGING_DB - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
+    *  PORT - for local server settings
+    *  JWT_SECRET - secret for token verification
+    *  DATABASE_URL - set to the path your locally hosted version of the postgres database
+    * TEST_DATABASE_URL - optional for a duplicate local database (empty) for testing purposes
     
 ## Contributing
 
@@ -171,5 +198,5 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/grants-fe/blob/master/README.md) for details on the fronend of our project.
+
