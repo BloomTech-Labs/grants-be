@@ -2,9 +2,10 @@ const db = require('../knex/knex.js');
 const Users = require('../users/for_both_user_types/bothUserTypeModels.js');
 
 beforeEach(async () => {
-  await db('users').truncate();
-  await db('writer_profiles').truncate();
-  await db('applicant_profiles').truncate();
+  // await db('users').truncate();
+  // await db('writer_profiles').truncate();
+  // await db('applicant_profiles').truncate();
+  await db.raw('TRUNCATE users RESTART IDENTITY CASCADE');
 });
 
 describe('user onboarding and registration queries', () => {
