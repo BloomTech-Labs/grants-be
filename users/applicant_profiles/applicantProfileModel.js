@@ -37,7 +37,7 @@ async function addApplicantProfile(id) {
   }
 
   const [profileId] = await db('applicant_profiles').insert(defaultData, "id");
-  console.log(`base user profile created for user ID: ${defaultData.applicant_id}`);
+  
   return findApplicantProfileById(profileId);
 }
 

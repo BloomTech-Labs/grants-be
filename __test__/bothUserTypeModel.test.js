@@ -8,7 +8,7 @@ beforeEach(async () => {
   await db.raw('TRUNCATE users RESTART IDENTITY CASCADE');
 });
 
-describe('user onboarding and registration queries', () => {
+describe('base user queries', () => {
   describe('CREATE queries', () => {
     it('adds a new user to the db', async () => {
       await Users.add({
@@ -31,4 +31,47 @@ describe('user onboarding and registration queries', () => {
       expect(users).toHaveLength(3);
     });
   });
+
+  describe('READ queries', () => {
+    it('GETS user by their ID', async () => {
+
+      await Users.add({
+        email: "email@email.com",
+        password: "password",
+        user_type: "writer"
+      });
+
+      const user = await Users.findById(1);
+
+      expect(user.email).toBe("email@email.com");
+      expect(user.user_type).toBe("writer");
+      
+    });
+
+    it('GETS users by user_type', async () => {
+
+      await Users.add({
+        email: "email@email.com",
+        password: "password",
+        user_type: "writer"
+      });
+
+      await Users.add({
+        email: "greg@email.com",
+        password: "password",
+        user_type: "applicant"
+      });
+
+      await Users.add({
+        email: "gmail@email.com",
+        password: "password",
+        user_type: "writer"
+      });
+
+      const writers = await Users.findByUserType("writer");
+
+      expect(writers).toHaveLength(2);
+
+    })
+  })
 });

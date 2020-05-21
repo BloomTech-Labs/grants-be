@@ -53,9 +53,7 @@ async function addWriterProfile(id) {
     };
 
     const [profileId] = await db("writer_profiles").insert(defaultData, "id");
-    console.log(
-        `base user profile created for user ID: ${defaultData.writer_id}`
-    );
+
     return findWriterProfileById(profileId);
 }
 
