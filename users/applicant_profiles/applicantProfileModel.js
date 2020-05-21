@@ -33,7 +33,7 @@ async function addApplicantProfile(id) {
     bio: "",
     org_name: "",
     sector: "",
-    website_url: ""
+    website: ""
   }
 
   const [profileId] = await db('applicant_profiles').insert(defaultData, "id");
