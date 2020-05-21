@@ -39,7 +39,7 @@ router.put("/:userId", restricted, (req, res) => {
 
     Writers.updateWriterProfile(changes, userId)
         .then(updated => {
-            res.status(201).json({
+            res.status(204).json({
               recordsUpdated: updated
             })
         })
@@ -74,7 +74,7 @@ router.get('/services', (req, res) => {
 
   Writers.findWriterServices()
     .then(services => {
-      res.json(services);
+      res.status(200).json(services);
     })
     .catch(err => {
       res.status(500).json({
@@ -93,7 +93,7 @@ router.get('/services/:id', (req, res) => {
   Writers.findWriterServicesById(id)
     .then(services => {
       if(services) {
-        res.json(pickups);
+        res.status(200).json(services);
       }else {
         res.status(200).json({
           message: "This user has no added services offered."
@@ -167,5 +167,177 @@ router.delete('/services/:service_id', (req, res) => {
       });
     });
 });
+
+// *** WRITER EDUCATIONS ROUTER *** 
+
+//add new writer education data
+router.post('/edu/:id', (req, res) => {
+
+  const { id } = req.params;
+  const eduData = {
+    writer_id: id,
+    college: req.params,
+    start_date: req.params,
+    end_data: req.params,
+    still_attending: req.params,
+    degree: req.params
+  }
+
+  Writers.addWriterEducation(eduData)
+    .then(education => {
+      res.status(201).json(education);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to add education history to profile.",
+        error: err
+      });
+  });
+});
+
+//get specific writer's education data by user id
+router.get('/edu/:id', (req, res) => {
+  const { id } = req.params;
+
+  Writers.findWriterEducationById(id)
+    .then(educations => {
+      if(educations) {
+        res.status(200).json(educations);
+      }else {
+        res.status(200).json({
+          message: "This user has not added education history."
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to retrieve education history for this user.",
+        error: err
+      });
+    });
+});
+
+//updates existing educationa history record, takes education record id (primary key) in params
+router.put('/edu/:educationId', (req, res) => {
+
+  const { educationId } = req.params;
+  const changes = req.body;
+
+  Writers.updateWriterEducation(changes, educationId)
+    .then(updated => {
+      res.status(204).json({
+        recordsUpdated: updated
+      })
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "There was an issue updating user education history."
+      });
+    });
+});
+
+//deletes existing education record, uses education record id (primary key).
+router.delete('/edu/:educationId', (req, res) => {
+
+  const { educationId } = req.params;
+
+  Writers.deleteWriterEducation(educationId)
+    .then(education => {
+      res.status(200).json({
+        message: "Education history has been deleted."
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to delete education history from user profile",
+        error: err
+      });
+    });
+});
+
+// *** WORK HISTORY ROUTER ***
+
+//adds new work history record to user
+router.post('/work/:id', (res, res) => {
+
+  const { id } = req.params;
+  const workHist = {
+    writer_id: id,
+    company: req.body,
+    position: req.body,
+    start_date: req.body,
+    end_date: req.body,
+    responsibilities: req.body,
+    current_position: req.body
+  }
+
+  Writers.addWorkHistory(workHist)
+    .then(work => {
+      res.status(201).json(work);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to add work history to profile.",
+        error: err
+      });
+    });
+});
+
+//get work history for specific user, user id required in params
+router.get('/work/:id', (req, res) => {
+
+  const { id } = req.params;
+
+  Writers.findWorkHistoryById(id)
+    .then(workHistories => {
+      if(workHistories) {
+        res.json(workHistories);
+      }else {
+        res.status(200).json({
+          message: "This user has no added work history."
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Failed to retrieve work history records for this user.",
+        error: err
+      });
+    }); 
+});
+
+//update existing user work history record, work history id required in params
+router.put('/work/:workHistId', (req, res) => {
+
+  const { workHistId } = req.params;
+  const changes = req.body;
+
+  Writers.updateWorkHistory(changes, workHistId)
+    .then(updated => {
+      res.status(204).json({
+        recordsUpdated: updated
+      })
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "There was an issue updating user work history.",
+        error: err
+      });
+    });
+});
+
+//delete existing work history, requires work history id in params.
+router.delete('/work/:workHistId', (req, res) => {
+  
+  const { workHistId } = req.params;
+
+  Writers.deleteWorkHistory(workHistId)
+    .then(workHistory => {
+      res.status(200).json({
+        message: "Work history record has been deleted."
+      })
+    })
+})
+
 
 module.exports = router;
