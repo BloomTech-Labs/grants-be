@@ -10,7 +10,7 @@ router.get('/', restricted, (req, res) => {
 
   Applicants.findApplicantProfiles()
     .then(profiles => {
-      res.json(profiles);
+      res.status(200).json(profiles);
     })
     .catch(err => {
       res.status(500).json({
@@ -47,7 +47,7 @@ router.put('/:userId', (req, res) => {
 
   Applicants.updateApplicantProfile(changes, userId)
     .then(updated => {
-      res.status(201).json({
+      res.status(204).json({
         recordsUpdated: updated
       })
     })

@@ -12,6 +12,15 @@ module.exports = {
     deleteWriterService,
     findWriterServicesById,
     findWriterServices,
+    addWriterEducation,
+    findWriterEducations,
+    findWriterEducationById,
+    updateWriterEducation,
+    deleteWriterEducation,
+    addWorkHistory,
+    findWorkHistoryById,
+    updateWorkHistory,
+    deleteWorkHistory
 };
 
 //returns all writers user type profiles
@@ -91,5 +100,73 @@ function updateWriterService(changes, writer_profile_id) {
 
 //deletes existing writer service on writer profile
 function deleteWriterService(service_id) {
-    return db("writer_services_offered").where("id", service_id).del();
+    return db("writer_services_offered").where("id", service_id)
+    .del();
+}
+
+// *** WRITER EDUCATION HELPER FUNCTIONS *** 
+
+//add new education data
+async function addWriterEducation(eduData) {
+  const [writer_id] = await db("writer_educations").insert(eduData, "writer_id");
+  return findWriterEducationById(writer_id);
+}
+
+//get writer education data by user id
+function findWriterEducationById(writer_id) {
+  return db("writer_educations")
+    .where(writer_id);
+}
+
+//get all writer education data
+function findWriterEducations() {
+  return db("writer_educations");
+}
+
+//update existing writer education data based on education data primary key id (not user id)
+function updateWriterEducation(changes, id) {
+  return db("writer_educations")
+    .where({ id })
+    .first()
+    .update(changes);
+}
+
+//deletes existing writer educate based on education data primary key id (not user id)
+function deleteWriterEducation(id) {
+  return db("writer_educations")
+    .where("id", id)
+    .del();
+}
+
+// *** WRITER WORK HISTORY HELPER FUNCTIONS ***
+
+//add new work history record to user profile
+async function addWorkHistory(workHistory) {
+  const [writer_id] = await db("work_histories")
+    .insert(
+      workHistory, 
+      "writer_id"
+    );
+    return findWorkHistoryById(writer_id);
+}
+
+//get all work history records for specific writer requires user id in params
+function findWorkHistoryById(writer_id) {
+  return db("work_histories")
+    .where(writer_id);
+}
+
+//update existing work history record, requires work history record id in params
+function updateWorkHistory(changes, id) {
+  return db("work_histories")
+    .where({ id })
+    .first()
+    .update(changes);
+}
+
+//deletes existing work history record, requires work history record id in params
+function deleteWorkHistory(id) {
+  return db("work_histories")
+    .where("id", id)
+    .del();
 }
