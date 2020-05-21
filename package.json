@@ -29,7 +29,8 @@
             "!**/sorter.js",
             "!**/prettify.js",
             "!**/grants-be/coverage/lcov-report/**",
-            "!**/block-navigation.js"
+            "!**/block-navigation.js",
+            "!**/secrets.js"
         ],
         "testEnvironment": "node"
     },
