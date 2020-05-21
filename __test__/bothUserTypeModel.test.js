@@ -2,9 +2,6 @@ const db = require('../knex/knex.js');
 const Users = require('../users/for_both_user_types/bothUserTypeModels.js');
 
 beforeEach(async () => {
-  // await db('users').truncate();
-  // await db('writer_profiles').truncate();
-  // await db('applicant_profiles').truncate();
   await db.raw('TRUNCATE users RESTART IDENTITY CASCADE');
 });
 
@@ -71,7 +68,37 @@ describe('base user queries', () => {
       const writers = await Users.findByUserType("writer");
 
       expect(writers).toHaveLength(2);
+      expect(writers[0].user_type).toBe("writer");
+      expect(writers[1].user_type).not.toBe("applicant");
 
+    })
+
+    it('GETS users by dynamic filter, in this test by email', async () => {
+
+      await Users.add({
+        email: "starfire@email.com",
+        password: "password",
+        user_type: "writer"
+      });
+
+      await Users.add({
+        email: "raven@email.com",
+        password: "password",
+        user_type: "applicant"
+      });
+
+      await Users.add({
+        email: "cyborg@email.com",
+        password: "password",
+        user_type: "writer"
+      });
+
+      const filtered = await Users.findBy({email: 'raven@email.com'});
+
+      expect(filtered).toHaveLength(1);
+      expect(filtered[0].email).toBe('raven@email.com');
+      expect(filtered[0].id).toBe(2);
+ 
     })
   })
 });
