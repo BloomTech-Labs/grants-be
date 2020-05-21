@@ -258,7 +258,7 @@ router.delete('/edu/:educationId', (req, res) => {
 // *** WORK HISTORY ROUTER ***
 
 //adds new work history record to user
-router.post('/work/:id', (res, res) => {
+router.post('/work/:id', (req, res) => {
 
   const { id } = req.params;
   const workHist = {
