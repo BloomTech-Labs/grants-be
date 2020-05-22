@@ -37,7 +37,8 @@ function findWriterProfileBy(filter) {
     return db("writer_profiles").where(filter).first();
 }
 
-//adds new writer profile. This is only to be used during the onboarding process, function is inserted into add function in bothUserTypeModel file.
+//adds new writer profile. This is only to be used during the onboarding process, 
+// function is inserted into add function in bothUserTypeModel file.
 async function addWriterProfile(id) {
     const defaultData = {
         writer_id: id,
