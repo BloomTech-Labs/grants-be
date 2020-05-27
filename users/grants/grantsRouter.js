@@ -69,7 +69,7 @@ router.delete("/:grantId", restricted, (req, res) => {
 // *** Affecting grants based on user ***
 
 //get all grants
-router.get("/user/:userId", restricted, (req, res) => {
+router.get("/user/:userId/", restricted, (req, res) => {
   const userId = req.params.userId;
   //should we filter grants by a status?? ie: open vs. closed grants
   Grants.findGrantsByUser(userId)
