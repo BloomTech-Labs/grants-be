@@ -3,23 +3,36 @@ const Users = require('../users/for_both_user_types/bothUserTypeModels.js');
 const Applicants = require('../users/applicant_profiles/applicantProfileModel.js');
 
 beforeEach(async () => {
-  //await db.raw('TRUNCATE applicant_profiles RESTART IDENTITY CASCADE');
+  await db.raw('TRUNCATE applicant_profiles RESTART IDENTITY CASCADE');
   await db.raw('TRUNCATE users RESTART IDENTITY CASCADE');
 });
 
+const userData = [
+  {
+    email: "person1@email.com", 
+    user_type: "applicant",
+    password: "password"
+  },
+  {
+    email: "person2@email.com", 
+    user_type: "applicant",
+    password: "password"
+  },
+  {
+    email: "person3@email.com", 
+    user_type: "applicant",
+    password: "password"
+  }
+]
 
 describe('applicant profile queries', () => {
   describe('CREATE functions', () => {
     it('adds a new blank user profile when new applicant registers', async () => {
       
-      //auto gen user id: 1
-        await Users.add({
-        email: "email@email.com",
-        password: "password",
-        user_type: "applicant"
-      })
+      await Users.add(userData[0]);  //auto gen user id: 1
 
-      const appProfiles = await db('applicant_profiles');
+
+      const appProfiles = await Applicants.findApplicantProfiles();
 
       expect(appProfiles).toHaveLength(1);
       expect(appProfiles[0].applicant_id).toBe(1);
@@ -32,24 +45,9 @@ describe('applicant profile queries', () => {
     it('returns all applicant_profiles', async () => {
 
       //applicant profiles auto generated with new user creation
-      await Users.add({
-        //autogen id: 1
-        email: "sunbeam@email.com",
-        password: "password",
-        user_type: "applicant"
-      });
-      await Users.add({
-        //autogen id: 2
-        email: "moonbeam@email.com",
-        password: "password",
-        user_type: "applicant"
-      });
-      await Users.add({
-        //autogen id: 3
-        email: "starshine@email.com",
-        password: "password",
-        user_type: "applicant"
-      });
+      await Users.add(userData[0]); //autogen id: 1
+      await Users.add(userData[1]); //autogen id: 2
+      await Users.add(userData[2]); //autogen id: 3
 
       const appProfiles = await Applicants.findApplicantProfiles();
 
@@ -59,29 +57,16 @@ describe('applicant profile queries', () => {
     })
     it('returns applicant profile info by user id', async () => {
 
-      await Users.add({
-        //autogen id: 1
-        email: "sunbeam@email.com",
-        password: "password",
-        user_type: "applicant"
-      });
-      await Users.add({
-        //autogen id: 2
-        email: "moonbeam@email.com",
-        password: "password",
-        user_type: "applicant"
-      });
-      await Users.add({
-        //autogen id: 3
-        email: "starshine@email.com",
-        password: "password",
-        user_type: "applicant"
-      });
+      await Users.add(userData[0]);
+      await Users.add(userData[1]);
+      await Users.add(userData[2]);
 
       const appProf3 = await Applicants.findApplicantProfileById(3);
 
       expect(appProf3.id).toBe(3);
       expect(appProf3.id).not.toBe(2);
-    });
+    })
+    test.todo('tests dynamic filter');
+    test.todo('tests profile update');
   });
-})
+});
