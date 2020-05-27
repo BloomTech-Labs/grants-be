@@ -9,17 +9,17 @@ beforeEach(async () => {
 
 const userData = [
   {
-    email: "person1@email.com", 
+    email: "sunbeam@email.com", 
     user_type: "applicant",
     password: "password"
   },
   {
-    email: "person2@email.com", 
+    email: "moonbeam@email.com", 
     user_type: "applicant",
     password: "password"
   },
   {
-    email: "person3@email.com", 
+    email: "starshine@email.com", 
     user_type: "applicant",
     password: "password"
   }
@@ -54,7 +54,8 @@ describe('applicant profile queries', () => {
       expect(appProfiles).toHaveLength(3);
       expect(appProfiles[0].org_name).toBe("");
       expect(appProfiles[2].id).toBe(3);
-    })
+    });
+
     it('returns applicant profile info by user id', async () => {
 
       await Users.add(userData[0]);
@@ -65,8 +66,41 @@ describe('applicant profile queries', () => {
 
       expect(appProf3.id).toBe(3);
       expect(appProf3.id).not.toBe(2);
-    })
-    test.todo('tests dynamic filter');
-    test.todo('tests profile update');
+    });
+
+    it('returns applicant profile(s) by dynamic filter', async () => {
+
+      await Users.add(userData[0]);
+      await Users.add(userData[1]);
+      await Users.add(userData[2]);
+
+      const emailSearch = await Applicants.findApplicantProfileBy({applicant_id: 1});
+      expect(emailSearch).toHaveLength(1);
+      expect(emailSearch[0].applicant_id).toBe(1);
+    });
+
+    it('updates applicant profile data', async () => {
+
+      await Users.add(userData[2]); //autogen id: 1
+      await Users.add(userData[0]); //autogen id: 2
+      await Users.add(userData[1]); //autogen id: 3
+
+      const profChanges = {
+        org_name: "New Name",
+        bio: "This is a little about me.",
+        first_name: "Janice",
+        last_name: "Ian"
+      }
+
+      await Applicants.updateApplicantProfile(profChanges, 2);
+
+      const updatedProfile = await Applicants.findApplicantProfileById(2);
+      const untouchedProfile = await Applicants.findApplicantProfileById(1);
+
+      expect(updatedProfile.org_name).toBe("New Name");
+      expect(updatedProfile.first_name).toBe("Janice");
+      expect(untouchedProfile.first_name).not.toBe("Janice");
+      
+    });
   });
 });
