@@ -13,7 +13,7 @@ function findApplicantProfileById(applicant_id) {
 }
 
 //returns applicant profile by dynamic filter
-function findApplicantProfileBy(filter) {
+function findApplicantProfilesBy(filter) {
   return db('applicant_profiles')
     .where(filter);
 }

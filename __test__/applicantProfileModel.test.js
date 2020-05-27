@@ -74,7 +74,7 @@ describe('applicant profile queries', () => {
       await Users.add(userData[1]);
       await Users.add(userData[2]);
 
-      const emailSearch = await Applicants.findApplicantProfileBy({applicant_id: 1});
+      const emailSearch = await Applicants.findApplicantProfilesBy({applicant_id: 1});
       expect(emailSearch).toHaveLength(1);
       expect(emailSearch[0].applicant_id).toBe(1);
     });
