@@ -142,7 +142,7 @@ To get the server running locally:
 
 `findApplicantProfileById(applicant_id)` -> Returns a single writer by ID
 
-`findApplicantProfileBy(filter)` -> Returns a single user by dynamic filter based on database 
+`findApplicantProfilesBy(filter)` -> Returns user(s) by dynamic filter based on database columns. 
 
 `addApplicantProfile(applicant_id)` -> Adds new writer profile for existing writer ID, blank by default.  
 
