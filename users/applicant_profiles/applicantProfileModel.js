@@ -51,7 +51,7 @@ function updateApplicantProfile(changes, applicant_id) {
 module.exports = {
   findApplicantProfiles,
   findApplicantProfileById,
-  findApplicantProfileBy,
+  findApplicantProfilesBy,
   addApplicantProfile,
   updateApplicantProfile
 }
