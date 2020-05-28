@@ -17,39 +17,47 @@ To get the server running locally:
 
 ### Framework
 
--    NodeJS
--    Express
--    Postgres
--    Knex
--    Jest
--    Jsonwebtoken
--    Bcryptjs
+- NodeJS
+- Express
+- Postgres
+- Knex
+- Jest
+- Jsonwebtoken
+- Bcryptjs
 
 ## 2️⃣ Endpoints
 
 #### Auth Routes (base URL + `api/auth`)
 
-| Method | Endpoint                | Token Required? | Description                                  |
-| ------ | ----------------------- | --------------- | -------------------------------------------- |
-| POST   | `/api/auth/register`    | no              | Adds new user, returns new user info         |
-| POST   | `/api/auth/login`       | no              | Logs in existing user, returns token         |
+| Method | Endpoint             | Token Required? | Description                          |
+| ------ | -------------------- | --------------- | ------------------------------------ |
+| POST   | `/api/auth/register` | no              | Adds new user, returns new user info |
+| POST   | `/api/auth/login`    | no              | Logs in existing user, returns token |
 
 #### Writer Profile Routes (base URL + `api/writers`)
 
-| Method | Endpoint                | Token Required?     | Description                              |
-| ------ | ----------------------- | ------------------- | ---------------------------------------- |
-| GET    | `/`                     | yes                 | Returns all writer profiles              |
-| GET    | `/:userId`              | yes                 | Returns specific writer profile          |
-| PUT    | `/:userId`              | yes                 | Updates writer profile                   |
+| Method | Endpoint   | Token Required? | Description                     |
+| ------ | ---------- | --------------- | ------------------------------- |
+| GET    | `/`        | yes             | Returns all writer profiles     |
+| GET    | `/:userId` | yes             | Returns specific writer profile |
+| PUT    | `/:userId` | yes             | Updates writer profile          |
 
 #### Applicant Profile Routes (base URL + `api/applicants`)
 
-| Method | Endpoint                | Token Required?     | Description                              |
-| ------ | ----------------------- | ------------------- | ---------------------------------------- |
-| GET    | `/`                     | yes                 | Returns all applicant profiles           |
-| GET    | `/:userId`              | yes                 | Returns specific applicant profile       |
-| PUT    | `/:userId`              | yes                 | Updates applicant profile                |
-                                                  
+| Method | Endpoint   | Token Required? | Description                        |
+| ------ | ---------- | --------------- | ---------------------------------- |
+| GET    | `/`        | yes             | Returns all applicant profiles     |
+| GET    | `/:userId` | yes             | Returns specific applicant profile |
+| PUT    | `/:userId` | yes             | Updates applicant profile          |
+
+#### Grants Info Routes (base URL + `api/grants`)
+
+| Method | Endpoint         | Token Required? | Description                            |
+| ------ | ---------------- | --------------- | -------------------------------------- |
+| GET    | `/`              | yes             | Returns all grants                     |
+| GET    | `/:grantId`      | yes             | Returns specific grant details         |
+| PUT    | `/:grantId`      | yes             | Updates grant details                  |
+| GET    | `/user/:userId/` | yes             | Returns all grants for a specific user |
 
 # Data Model
 
@@ -112,7 +120,7 @@ To get the server running locally:
 
 ## 2️⃣ Actions
 
-##### Users 
+##### Users
 
 `add(user)` -> Adds new user, returns new user data
 
@@ -120,7 +128,7 @@ To get the server running locally:
 
 `findByUserType(user_type)` -> Returns a single user by user type
 
-`findBy(filter)` -> Returns a single user by dynamic filter based on database 
+`findBy(filter)` -> Returns a single user by dynamic filter based on database
 
 ##### Writer Profiles
 
@@ -130,7 +138,7 @@ To get the server running locally:
 
 `findWriterProfileBy(filter)` -> Returns a single user by dynamic filter based on database
 
-`addWriterProfile(writer_id)` -> Adds new writer profile for existing writer ID, blank by default.  
+`addWriterProfile(writer_id)` -> Adds new writer profile for existing writer ID, blank by default.
 
 `updateWriterProfile(writer_id, updatedData)` -> Update writer profile by writer ID
 
@@ -144,22 +152,37 @@ To get the server running locally:
 
 `findApplicantProfilesBy(filter)` -> Returns user(s) by dynamic filter based on database columns. 
 
-`addApplicantProfile(applicant_id)` -> Adds new writer profile for existing writer ID, blank by default.  
+`addApplicantProfile(applicant_id)` -> Adds new writer profile for existing writer ID, blank by default.
 
 `updateApplicantProfile(applicant_id, updatedData)` -> Update writer profile by writer ID
 
+##### Grants Detials
+
+`findGrants()` -> Returns all grants
+
+`findGrantsById(grant_id)` -> Returns a single grant by the grant id.
+
+`findGrantsByUser(user_id)` -> Returns all grants by a single user id.
+
+`findGrantsBy(filter)` -> Returns all grants by dynamic filter based on database
+
+`findSingleGrantBy(filter)` -> Returns a single grant by dynamic filter based on database
+
+`addGrant(id)` -> Adds new grant details.
+
+`updateGrant(changes, grant_id)` -> Update a grant based on the grant ID
 
 ## 3️⃣ Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-    
-    *  PORT - for local server settings
-    *  JWT_SECRET - secret for token verification
-    *  DATABASE_URL - set to the path your locally hosted version of the postgres database
-    * TEST_DATABASE_URL - optional for a duplicate local database (empty) for testing purposes
-    
+
+_ PORT - for local server settings
+_ JWT*SECRET - secret for token verification
+* DATABASE*URL - set to the path your locally hosted version of the postgres database
+* TEST_DATABASE_URL - optional for a duplicate local database (empty) for testing purposes
+
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
@@ -168,11 +191,12 @@ Please note we have a [code of conduct](./code_of_conduct.md). Please follow it 
 
 ### Issue/Bug Request
 
- **If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
- - Check first to see if your issue has already been reported.
- - Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
- - Create a live example of the problem.
- - Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes,  where you believe the issue is originating from, and any potential solutions you have considered.
+**If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
+
+- Check first to see if your issue has already been reported.
+- Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
+- Create a live example of the problem.
+- Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes, where you believe the issue is originating from, and any potential solutions you have considered.
 
 ### Feature Requests
 
@@ -199,4 +223,3 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 ## Documentation
 
 See [Frontend Documentation](https://github.com/Lambda-School-Labs/grants-fe/blob/master/README.md) for details on the fronend of our project.
-
