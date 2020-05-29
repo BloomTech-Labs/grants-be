@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = {
     development: {
@@ -10,6 +10,7 @@ module.exports = {
         seeds: {
             directory: __dirname + "/knex/seeds",
         },
+        ssl: true,
     },
     testing: {
         client: "pg",
@@ -20,6 +21,7 @@ module.exports = {
         seeds: {
             directory: __dirname + "/knex/seeds",
         },
+        ssl: true,
     },
     staging: {
         client: "pg",
@@ -34,6 +36,7 @@ module.exports = {
             min: 2,
             max: 10,
         },
+        ssl: true,
     },
     production: {
         client: "pg",
@@ -44,5 +47,6 @@ module.exports = {
         seeds: {
             directory: __dirname + "/knex/seeds",
         },
+        ssl: true,
     },
 };
