@@ -2,7 +2,28 @@ const router = require("express").Router();
 
 const Grants = require("./grantsModel");
 const restricted = require("../../auth/middleware/restricted");
-const checkUserId = require("../../auth/middleware/verifyUserId");
+// const verifyGrant = require('../../auth/middleware/verifyGrant.js');
+
+//create a new grant
+router.post("/new", (req, res) => {
+  let newGrant = req.body;
+  if (!!grant_name) {
+    Grants.add(newGrant)
+      .then((grant) => {
+        console.log("Added a grant", grant);
+        const { id, grant_name, org_name } = grant;
+        res.status(201).json({
+          id,
+          grant_name,
+          org_name,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json(error);
+      });
+  }
+});
 
 //get all grants (maybe add a filter)
 router.get("/", restricted, (req, res) => {

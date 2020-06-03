@@ -37,13 +37,8 @@ function findSingleGrantBy(filter) {
 }
 
 //adds new grant.
-async function addGrant(id) {
-  const defaultData = {
-    grant_id: id,
-    //other fields that are needed base on the tables...
-  };
-
-  const [grantId] = await db("grants").insert(defaultData, "id");
+async function addGrant(grant) {
+  const [grantId] = await db("grants").insert(grant, "id");
 
   return findGrantsById(grantId);
 }
