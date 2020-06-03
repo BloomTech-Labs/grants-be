@@ -4,175 +4,166 @@ const Writers = require("./writersProfileModel");
 const restricted = require("../../auth/middleware/restricted");
 const checkUserId = require("../../auth/middleware/verifyUserId");
 
-
 //get all writers profiles
 router.get("/", restricted, (req, res) => {
-    Writers.findWritersProfile()
-        .then((profiles) => {
-            res.json(profiles);
-        })
-        .catch((err) => res.send(err));
+  Writers.findWritersProfile()
+    .then((profiles) => {
+      res.json(profiles);
+    })
+    .catch((err) => res.send(err));
 });
 
 //get a writer  profile by id
 router.get("/:userId", checkUserId, (req, res) => {
-  const {userId} = req.params;
+  const { userId } = req.params;
 
   Writers.findWriterProfileById(userId)
-    .then(profile => {
+    .then((profile) => {
       res.status(200).json({
-        profile
+        profile,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "there's been an issue getting user info",
-        error: err
-      })
-    })
-});
-
-//put update a writer profile info
-router.put("/:userId", restricted, (req, res) => {
-    const { userId } = req.params;
-    const changes = req.body;
-
-    Writers.updateWriterProfile(changes, userId)
-        .then(updated => {
-            res.status(204).json({
-              recordsUpdated: updated
-            })
-        })
-        .catch(err => {
-            res.status(500).json({
-              message: "There was an issue updating writer profile",
-              error: err
-            });
-        });
-});
-
-//delete a writer profile  by id
-router.delete("/:id", restricted, (req, res) => {
-    const id = req.params.id;
-
-    Writers.deleteWriteProfile(id)
-        .then((profile) => {
-            res.status(200).json({
-                message: "The writer profile successfully deleted.",
-            });
-        })
-        .catch((err) => {
-            res.status(500).json(err);
-        });
-});
-
-
-// *** WRITER SERVICES OFFERED ROUTER ***
-
-//get all services in db
-router.get('/services', (req, res) => {
-
-  Writers.findWriterServices()
-    .then(services => {
-      res.status(200).json(services);
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: "Failed to retreive services.",
-        error: err
+        error: err,
       });
     });
 });
 
+//put update a writer profile info
+router.put("/:userId", restricted, (req, res) => {
+  const { userId } = req.params;
+  const changes = req.body;
+
+  Writers.updateWriterProfile(changes, userId)
+    .then((updated) => {
+      res.status(204).json({
+        recordsUpdated: updated,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: "There was an issue updating writer profile",
+        error: err,
+      });
+    });
+});
+
+//delete a writer profile  by id
+router.delete("/:id", restricted, (req, res) => {
+  const id = req.params.id;
+
+  Writers.deleteWriteProfile(id)
+    .then((profile) => {
+      res.status(200).json({
+        message: "The writer profile successfully deleted.",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+// *** WRITER SERVICES OFFERED ROUTER ***
+
+//get all services in db
+router.get("/services", (req, res) => {
+  Writers.findWriterServices()
+    .then((services) => {
+      res.status(200).json(services);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: "Failed to retreive services.",
+        error: err,
+      });
+    });
+});
 
 //get all services from one specific user by profile id
-router.get('/services/:id', (req, res) => {
-
+router.get("/services/:id", (req, res) => {
   const { id } = req.params;
 
   Writers.findWriterServicesById(id)
-    .then(services => {
-      if(services) {
+    .then((services) => {
+      if (services) {
         res.status(200).json(services);
-      }else {
+      } else {
         res.status(200).json({
-          message: "This user has no added services offered."
+          message: "This user has no added services offered.",
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to retrieve offered services for this user.",
-        error: err
+        error: err,
       });
     });
 });
 
 //add service to user profile...writer profile id in params
-router.post('/services/:id', (req, res) => {
-
+router.post("/services/:id", (req, res) => {
   const { id } = req.params;
   const service = {
-    writer_profile_id : id,
-    service_offered : req.body
-  }
+    writer_profile_id: id,
+    service_offered: req.body,
+  };
 
   Writers.addWriterService(service)
-    .then(addedService => {
+    .then((addedService) => {
       res.status(201).json(addedService);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to add service to profile.",
-        error: err
+        error: err,
       });
     });
 });
 
 //edit existing service on writer profile...uses writer profile id in params
-router.put('/services/:id', (req, res) => {
-  
+router.put("/services/:id", (req, res) => {
   const id = req.params;
   const changes = req.body;
 
   Writers.updateWriterService(changes, id)
-    .then(updated => {
+    .then((updated) => {
       res.status(200).json({
-        recordsUpdated: updated
-      })
+        recordsUpdated: updated,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to update services on profile",
-        error: err
+        error: err,
       });
     });
 });
 
 //delete existing service from writer profile...uses service id in params
-router.delete('/services/:service_id', (req, res) => {
-
+router.delete("/services/:service_id", (req, res) => {
   const { service_id } = req.params;
 
   Writers.deleteWriteProfile(service_id)
-    .then(service => {
+    .then((service) => {
       res.status(200).json({
-        message: "Service has been deleted from user profile."
+        message: "Service has been deleted from user profile.",
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to delete service from user profile",
-        error: err
+        error: err,
       });
     });
 });
 
-// *** WRITER EDUCATIONS ROUTER *** 
+// *** WRITER EDUCATIONS ROUTER ***
 
 //add new writer education data
-router.post('/edu/:id', (req, res) => {
-
+router.post("/edu/:id", (req, res) => {
   const { id } = req.params;
   const eduData = {
     writer_id: id,
@@ -180,77 +171,75 @@ router.post('/edu/:id', (req, res) => {
     start_date: req.params,
     end_data: req.params,
     still_attending: req.params,
-    degree: req.params
-  }
+    degree: req.params,
+  };
 
   Writers.addWriterEducation(eduData)
-    .then(education => {
+    .then((education) => {
       res.status(201).json(education);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to add education history to profile.",
-        error: err
+        error: err,
       });
-  });
+    });
 });
 
 //get specific writer's education data by user id
-router.get('/edu/:id', (req, res) => {
+router.get("/edu/:id", (req, res) => {
   const { id } = req.params;
 
   Writers.findWriterEducationById(id)
-    .then(educations => {
-      if(educations) {
+    .then((educations) => {
+      if (educations) {
         res.status(200).json(educations);
-      }else {
+      } else {
         res.status(200).json({
-          message: "This user has not added education history."
+          message: "This user has not added education history.",
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to retrieve education history for this user.",
-        error: err
+        error: err,
       });
     });
 });
 
 //updates existing educationa history record, takes education record id (primary key) in params
-router.put('/edu/:educationId', (req, res) => {
-
+router.put("/edu/:educationId", (req, res) => {
   const { educationId } = req.params;
   const changes = req.body;
 
   Writers.updateWriterEducation(changes, educationId)
-    .then(updated => {
+    .then((updated) => {
       res.status(204).json({
-        recordsUpdated: updated
-      })
+        recordsUpdated: updated,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
-        message: "There was an issue updating user education history."
+        message: "There was an issue updating user education history.",
       });
     });
 });
 
 //deletes existing education record, uses education record id (primary key).
-router.delete('/edu/:educationId', (req, res) => {
-
+router.delete("/edu/:educationId", (req, res) => {
   const { educationId } = req.params;
 
   Writers.deleteWriterEducation(educationId)
-    .then(education => {
+    .then((education) => {
       res.status(200).json({
-        message: "Education history has been deleted."
+        message: "Education history has been deleted.",
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to delete education history from user profile",
-        error: err
+        error: err,
       });
     });
 });
@@ -258,8 +247,7 @@ router.delete('/edu/:educationId', (req, res) => {
 // *** WORK HISTORY ROUTER ***
 
 //adds new work history record to user
-router.post('/work/:id', (req, res) => {
-
+router.post("/work/:id", (req, res) => {
   const { id } = req.params;
   const workHist = {
     writer_id: id,
@@ -268,76 +256,82 @@ router.post('/work/:id', (req, res) => {
     start_date: req.body,
     end_date: req.body,
     responsibilities: req.body,
-    current_position: req.body
-  }
+    current_position: req.body,
+  };
 
   Writers.addWorkHistory(workHist)
-    .then(work => {
+    .then((work) => {
       res.status(201).json(work);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to add work history to profile.",
-        error: err
+        error: err,
       });
     });
 });
 
 //get work history for specific user, user id required in params
-router.get('/work/:id', (req, res) => {
-
+router.get("/work/:id", (req, res) => {
   const { id } = req.params;
 
   Writers.findWorkHistoryById(id)
-    .then(workHistories => {
-      if(workHistories) {
+    .then((workHistories) => {
+      if (workHistories) {
         res.json(workHistories);
-      }else {
+      } else {
         res.status(200).json({
-          message: "This user has no added work history."
+          message: "This user has no added work history.",
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "Failed to retrieve work history records for this user.",
-        error: err
+        error: err,
       });
-    }); 
+    });
 });
 
 //update existing user work history record, work history id required in params
-router.put('/work/:workHistId', (req, res) => {
-
+router.put("/work/:workHistId", (req, res) => {
   const { workHistId } = req.params;
   const changes = req.body;
 
   Writers.updateWorkHistory(changes, workHistId)
-    .then(updated => {
+    .then((updated) => {
       res.status(204).json({
-        recordsUpdated: updated
-      })
+        recordsUpdated: updated,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
         message: "There was an issue updating user work history.",
-        error: err
+        error: err,
       });
     });
 });
 
 //delete existing work history, requires work history id in params.
-router.delete('/work/:workHistId', (req, res) => {
-  
+router.delete("/work/:workHistId", (req, res) => {
   const { workHistId } = req.params;
 
-  Writers.deleteWorkHistory(workHistId)
-    .then(workHistory => {
-      res.status(200).json({
-        message: "Work history record has been deleted."
-      })
-    })
-})
+  Writers.deleteWorkHistory(workHistId).then((workHistory) => {
+    res.status(200).json({
+      message: "Work history record has been deleted.",
+    });
+  });
+});
 
+// this post doesn't need a body, when passed the valid id's in the params it will create the appropriate new record
+router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
+  const { writer_id } = req.params;
+  const { grant_id } = req.params;
+  // console.log(writer_id, grant_id);
+  Writers.addWriterSavedGrant(Number(writer_id), Number(grant_id))
+    .then((success) => res.send({ message: success }))
+    // .then((success) => console.log(`success: `, success))
+    .catch((err) => res.send({ error: err.message }));
+});
 
 module.exports = router;
