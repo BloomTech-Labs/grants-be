@@ -11,8 +11,8 @@ function findApplicantProfileById(applicant_id) {
 }
 
 //returns applicant profile by dynamic filter
-function findApplicantProfileBy(filter) {
-  return db("applicant_profiles").where(filter).first();
+function findApplicantProfilesBy(filter) {
+  return db("applicant_profiles").where(filter);
 }
 
 //adds new applicant profile. This is only to be used during the onboarding process, function is inserted into add function in bothUserTypeModel file.

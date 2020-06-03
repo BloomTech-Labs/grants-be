@@ -17,7 +17,7 @@ router.post("/register", (req, res) => {
     if (user_type === "writer" || user_type === "applicant") {
         Users.add(user)
             .then((user) => {
-                console.log("Added a user", user);
+               
                 const { id, email, user_type } = user;
                 res.status(201).json({
                     id,
@@ -43,9 +43,7 @@ router.post("/login", (req, res) => {
         .first()
         .then((user) => {
             if (user && bcrypt.compareSync(password, user.password)) {
-                console.log(user);
                 const token = createToken(user);
-                console.log(token);
 
                 res.status(200).json({
                     message: `Welcome Back!`,
@@ -55,7 +53,6 @@ router.post("/login", (req, res) => {
                 });
             } else if (user && user.password === "Testing") {
                 const token = createToken(user);
-                console.log(token);
 
                 res.status(200).json({
                     message: `Welcome Back!`,

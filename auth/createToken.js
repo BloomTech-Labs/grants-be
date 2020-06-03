@@ -8,7 +8,6 @@ module.exports = function createToken(user) {
     user_type: user.user_type
   };
 
-  console.log(`My mistake: ${secret.jwtSecret}`);
   const options = {
     expiresIn: '8h'
   };
