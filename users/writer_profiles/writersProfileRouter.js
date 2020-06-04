@@ -13,6 +13,11 @@ router.get("/", restricted, (req, res) => {
     .catch((err) => res.send(err));
 });
 
+router.get("/saved-grants/", (req, res) => {
+  Writers.getWriterSavedGrant()
+    .then((favorites) => res.send({ favorites: favorites }))
+    .catch((err) => res.send({ error: err.message, message: "it was me" }));
+});
 //get a writer  profile by id
 router.get("/:userId", checkUserId, (req, res) => {
   const { userId } = req.params;
@@ -181,7 +186,7 @@ router.post("/edu/:id", (req, res) => {
     .catch((err) => {
       res.status(500).json({
         message: "Failed to add education history to profile.",
-        error: err,
+        error: err.message,
       });
     });
 });
@@ -246,27 +251,17 @@ router.delete("/edu/:educationId", (req, res) => {
 
 // *** WORK HISTORY ROUTER ***
 
-//adds new work history record to user
+//adds new work history record to user - returns writers entire array of jobs
 router.post("/work/:id", (req, res) => {
-  const { id } = req.params;
-  const workHist = {
-    writer_id: id,
-    company: req.body,
-    position: req.body,
-    start_date: req.body,
-    end_date: req.body,
-    responsibilities: req.body,
-    current_position: req.body,
-  };
-
-  Writers.addWorkHistory(workHist)
+  const { body } = req;
+  Writers.addWorkHistory(body)
     .then((work) => {
       res.status(201).json(work);
     })
     .catch((err) => {
       res.status(500).json({
         message: "Failed to add work history to profile.",
-        error: err,
+        error: err.message,
       });
     });
 });
@@ -288,22 +283,18 @@ router.get("/work/:id", (req, res) => {
     .catch((err) => {
       res.status(500).json({
         message: "Failed to retrieve work history records for this user.",
-        error: err,
+        error: err.message,
       });
     });
 });
 
-//update existing user work history record, work history id required in params
+//update existing user work history record, work history id required in params - returns updated array
 router.put("/work/:workHistId", (req, res) => {
   const { workHistId } = req.params;
   const changes = req.body;
 
   Writers.updateWorkHistory(changes, workHistId)
-    .then((updated) => {
-      res.status(204).json({
-        recordsUpdated: updated,
-      });
-    })
+    .then((updated) => res.json(updated))
     .catch((err) => {
       res.status(500).json({
         message: "There was an issue updating user work history.",
@@ -329,9 +320,20 @@ router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
   const { grant_id } = req.params;
   // console.log(writer_id, grant_id);
   Writers.addWriterSavedGrant(Number(writer_id), Number(grant_id))
-    .then((success) => res.send({ message: success }))
+    .then((success) =>
+      res.send({
+        message: success,
+        another: "from /:writer_id/saved-grants/:grant_id",
+      })
+    )
     // .then((success) => console.log(`success: `, success))
     .catch((err) => res.send({ error: err.message }));
+});
+
+router.get("/saved-grants/", (req, res) => {
+  Writers.getWriterSavedGrant()
+    .then((favorites) => res.send({ favorites: favorites }))
+    .catch((err) => res.send({ error: err.message, message: "it was me" }));
 });
 
 module.exports = router;

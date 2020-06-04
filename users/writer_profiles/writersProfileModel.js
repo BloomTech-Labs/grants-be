@@ -22,6 +22,7 @@ module.exports = {
   updateWorkHistory,
   deleteWorkHistory,
   addWriterSavedGrant,
+  getWriterSavedGrant,
 };
 
 //returns all writers user type profiles
@@ -137,32 +138,37 @@ function deleteWriterEducation(id) {
 
 //add new work history record to user profile
 async function addWorkHistory(workHistory) {
-  const [writer_id] = await db("work_histories").insert(
-    workHistory,
-    "writer_id"
-  );
-  return findWorkHistoryById(writer_id);
+  await db("work_histories").insert(workHistory);
+
+  return findWorkHistoryById(workHistory.writer_id);
 }
 
 //get all work history records for specific writer requires user id in params
 function findWorkHistoryById(writer_id) {
-  return db("work_histories").where(writer_id);
+  return db("work_histories").where("writer_id", writer_id);
 }
 
 //update existing work history record, requires work history record id in params
-function updateWorkHistory(changes, id) {
-  return db("work_histories").where({ id }).first().update(changes);
+async function updateWorkHistory(changes, id) {
+  await db("work_histories").where("id", id).update(changes);
+  return findWorkHistoryById(changes.writer_id);
 }
 
 //deletes existing work history record, requires work history record id in params
-function deleteWorkHistory(id) {
+async function deleteWorkHistory(id) {
   return db("work_histories").where("id", id).del();
 }
 
 //add a grant to writers saved list
 async function addWriterSavedGrant(writer_id, grant_id) {
-  console.log(writer_id, grant_id);
-  await db("writer_saved_grants").insert(writer_id, grant_id);
-  return `Success, grant id ${grant_id} was favorited by user id ${writer_id}.`;
+  const id = await db("writer_saved_grants").insert(writer_id, grant_id);
+  return {
+    message: `Success, grant id ${grant_id} was favorited by user id ${writer_id}.`,
+    id,
+  };
   // return id;
+}
+
+function getWriterSavedGrant(writer_id) {
+  return db("writer_saved_grants as wsg").where("wsg.writer-id", writer_id);
 }
