@@ -11,11 +11,9 @@ router.post("/new", (req, res) => {
     Grants.add(newGrant)
       .then((grant) => {
         console.log("Added a grant", grant);
-        const { id, grant_name, org_name } = grant;
         res.status(201).json({
-          id,
-          grant_name,
-          org_name,
+          message: "successfully entered new grant!",
+          grant_details: grant,
         });
       })
       .catch((error) => {
@@ -26,7 +24,8 @@ router.post("/new", (req, res) => {
 });
 
 //get all grants (maybe add a filter)
-router.get("/", restricted, (req, res) => {
+router.get("/", (req, res) => {
+  // router.get("/", restricted, (req, res) => {
   //should we filter grants by a status?? ie: open vs. closed grants
   Grants.findGrants()
     .then((grants) => {
