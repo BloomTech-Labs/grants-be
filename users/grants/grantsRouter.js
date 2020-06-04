@@ -7,20 +7,18 @@ const restricted = require("../../auth/middleware/restricted");
 //create a new grant
 router.post("/new", (req, res) => {
   let newGrant = req.body;
-  if (!!grant_name) {
-    Grants.add(newGrant)
-      .then((grant) => {
-        console.log("Added a grant", grant);
-        res.status(201).json({
-          message: "successfully entered new grant!",
-          grant_details: grant,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).json(error);
+  Grants.add(newGrant)
+    .then((grant) => {
+      console.log("Added a grant", grant);
+      res.status(201).json({
+        message: "successfully entered new grant!",
+        grant_details: grant,
       });
-  }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json(error);
+    });
 });
 
 //get all grants (maybe add a filter)
