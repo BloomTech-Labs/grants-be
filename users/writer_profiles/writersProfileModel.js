@@ -155,8 +155,9 @@ async function updateWorkHistory(changes, id) {
 }
 
 //deletes existing work history record, requires work history record id in params
-async function deleteWorkHistory(id) {
-  return db("work_histories").where("id", id).del();
+async function deleteWorkHistory(workHistId, userId) {
+  await db("work_histories").where("id", workHistId).del();
+  return findWorkHistoryById(userId);
 }
 
 //add a grant to writers saved list

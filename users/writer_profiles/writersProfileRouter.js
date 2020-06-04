@@ -252,7 +252,7 @@ router.delete("/edu/:educationId", (req, res) => {
 // *** WORK HISTORY ROUTER ***
 
 //adds new work history record to user - returns writers entire array of jobs
-router.post("/work/:id", (req, res) => {
+router.post("/:id/work/", (req, res) => {
   const { body } = req;
   Writers.addWorkHistory(body)
     .then((work) => {
@@ -267,7 +267,7 @@ router.post("/work/:id", (req, res) => {
 });
 
 //get work history for specific user, user id required in params
-router.get("/work/:id", (req, res) => {
+router.get("/:id/work/", (req, res) => {
   const { id } = req.params;
 
   Writers.findWorkHistoryById(id)
@@ -289,7 +289,7 @@ router.get("/work/:id", (req, res) => {
 });
 
 //update existing user work history record, work history id required in params - returns updated array
-router.put("/work/:workHistId", (req, res) => {
+router.put("/:id/work/:workHistId", (req, res) => {
   const { workHistId } = req.params;
   const changes = req.body;
 
@@ -304,13 +304,12 @@ router.put("/work/:workHistId", (req, res) => {
 });
 
 //delete existing work history, requires work history id in params.
-router.delete("/work/:workHistId", (req, res) => {
+router.delete("/:id/work/:workHistId", (req, res) => {
   const { workHistId } = req.params;
+  const { id } = req.params;
 
-  Writers.deleteWorkHistory(workHistId).then((workHistory) => {
-    res.status(200).json({
-      message: "Work history record has been deleted.",
-    });
+  Writers.deleteWorkHistory(workHistId, id).then((workHistory) => {
+    res.status(200).json(workHistory);
   });
 });
 
