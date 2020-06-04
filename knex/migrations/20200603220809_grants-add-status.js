@@ -4,7 +4,7 @@ exports.up = function (knex) {
   });
 };
 
-exports.down = function (knex, Promise) {
+exports.down = function (knex) {
   return knex.schema.table("grants", (tbl) => {
     tbl.dropColumn("status");
   });
