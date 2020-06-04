@@ -3,19 +3,16 @@ const Grants = require("../../users/grants/grantsModel.js");
 function verifyGrant(req, res, next) {
   const grant = req.params;
   let defaultGrant = {
-    grant_id: "",
+    applicant_profile_id: "",
     contact_name: "",
     description: "",
     due_date: "",
     grant_name: "",
+    id: "",
     org_name: "",
     sector: "",
-    //other fields that are needed base on the tables...
-    /*
-    site_id: '',
-    status: '',
-    applicant_profile_id: ''
-    */
+    site_id: "",
+    status: "",
   };
 
   return {
