@@ -7,6 +7,7 @@ module.exports = {
   findGrantsByUser,
   findGrantsBy,
   findSingleGrantBy,
+  findGrantsByStatus,
   addGrant,
   updateGrant,
   deleteGrant,
@@ -15,21 +16,22 @@ module.exports = {
 //returns all grants details
 function findGrants(status) {
   return db("grants");
-  // if we want to search grants by it's status...
-  // return db('grants').where({status});
 }
 
 //returns a specific grant profile or null
-function findGrantsById(grant_Id) {
-  return db("grants").where({ grant_id }).first();
+function findGrantsById(id) {
+  return db("grants").where({ id }).first();
 }
 //returns a specific grant profile or null
-function findGrantsByUser(user_Id) {
-  return db("grants").where({ user_id }).first();
+function findGrantsByUser(applicant_profile_id) {
+  return db("grants").where({ applicant_profile_id }).first();
 }
 //returns ALL grants by filter
 function findGrantsBy(filter) {
   return db("grants").where(filter);
+}
+function findGrantsByStatus(status) {
+  return db("grants").where({ status });
 }
 //returns a SINGLE grant by filter
 function findSingleGrantBy(filter) {
@@ -49,6 +51,6 @@ function updateGrant(changes, grant_id) {
 }
 
 //function to delete a grant
-function deleteGrant(grant_id) {
-  return db("grants").where({ grant_id }).del();
+function deleteGrant(id) {
+  return db("grants").where({ id }).del();
 }
