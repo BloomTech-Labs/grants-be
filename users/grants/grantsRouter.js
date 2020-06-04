@@ -7,7 +7,7 @@ const restricted = require("../../auth/middleware/restricted");
 //create a new grant
 router.post("/new", (req, res) => {
   let newGrant = req.body;
-  Grants.add(newGrant)
+  Grants.addGrant(newGrant)
     .then((grant) => {
       console.log("Added a grant", grant);
       res.status(201).json({
