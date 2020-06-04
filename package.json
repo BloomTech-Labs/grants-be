@@ -7,7 +7,7 @@
         "server": "nodemon index.js",
         "start": "node index.js",
         "migrations:test": "knex migrate:latest",
-        "test": "cross-env ENVIRONMENT=testing jest --detectOpenHandles --forceExit || true",
+        "test": "cross-env ENVIRONMENT=testing jest --detectOpenHandles --forceExit --runInBand || true",
         "coverage": "cross-env ENVIRONMENT=testing jest --coverage --detectOpenHandles --forceExit || true"
     },
     "pg": {

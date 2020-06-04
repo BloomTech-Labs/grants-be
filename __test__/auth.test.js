@@ -41,3 +41,4 @@ test("try to login without email", async () => {
         .send({ email: "", password: "test" });
     expect(res.status).toBe(401);
 });
+
