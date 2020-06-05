@@ -5,7 +5,7 @@ const restricted = require("../../auth/middleware/restricted");
 // const verifyGrant = require('../../auth/middleware/verifyGrant.js');
 
 //create a new grant
-router.post("/new", (req, res) => {
+router.post("/new", restricted, (req, res) => {
   let newGrant = req.body;
   Grants.addGrant(newGrant)
     .then((grant) => {
@@ -25,9 +25,7 @@ router.post("/new", (req, res) => {
 });
 
 //get all grants (maybe add a filter)
-router.get("/", (req, res) => {
-  // router.get("/", restricted, (req, res) => {
-  //should we filter grants by a status?? ie: open vs. closed grants
+router.get("/", restricted, (req, res) => {
   Grants.findGrants()
     .then((grants) => {
       res.json(grants);
@@ -41,9 +39,9 @@ router.get("/", (req, res) => {
 });
 
 //get a grant by grant_id
-router.get("/:grantId", (req, res) => {
+router.get("/:grantId", restricted, (req, res) => {
   const id = req.params.grantId;
-  Grants.findSingleGrantBy(id)
+  Grants.findSingleGrantById(id)
     .then((grant) => {
       res.status(200).json({
         grant,

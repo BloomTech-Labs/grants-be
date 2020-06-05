@@ -3,7 +3,7 @@ const db = require("../../knex/knex");
 module.exports = {
   //export grantsModels...
   findGrants,
-  findGrantsById,
+  findSingleGrantById,
   findGrantsByUser,
   findGrantsBy,
   findSingleGrantBy,
@@ -19,11 +19,6 @@ function findGrants(status) {
 }
 
 //returns a specific grant profile or null
-function findGrantsById(id) {
-  console.log("findSingleGrantById: ", id);
-  return db("grants").where({ id }).first();
-}
-//returns a specific grant profile or null
 function findGrantsByUser(applicant_profile_id) {
   return db("grants").where({ applicant_profile_id });
 }
@@ -33,6 +28,11 @@ function findGrantsBy(filter) {
 }
 function findGrantsByStatus(status) {
   return db("grants").where({ status });
+}
+//returns a specific grant profile or null
+function findSingleGrantById(id) {
+  console.log("findSingleGrantById: ", id);
+  return db("grants").where({ id }).first();
 }
 //returns a SINGLE grant by filter
 function findSingleGrantBy(filter) {
