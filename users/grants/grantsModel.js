@@ -20,6 +20,7 @@ function findGrants(status) {
 
 //returns a specific grant profile or null
 function findGrantsById(id) {
+  console.log("findSingleGrantById: ", id);
   return db("grants").where({ id }).first();
 }
 //returns a specific grant profile or null
@@ -47,6 +48,7 @@ async function addGrant(grant) {
 
 //updates data on a grant
 function updateGrant(changes, id) {
+  console.log("updateGrant: ", changes, id);
   return db("grants").where({ id }).first().update(changes);
 }
 
