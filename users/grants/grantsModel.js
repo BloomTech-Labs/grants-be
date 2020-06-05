@@ -24,7 +24,7 @@ function findGrantsById(id) {
 }
 //returns a specific grant profile or null
 function findGrantsByUser(applicant_profile_id) {
-  return db("grants").where({ applicant_profile_id }).first();
+  return db("grants").where({ applicant_profile_id });
 }
 //returns ALL grants by filter
 function findGrantsBy(filter) {
@@ -46,7 +46,7 @@ async function addGrant(grant) {
 }
 
 //updates data on a grant
-function updateGrant(changes, grant_id) {
+function updateGrant(changes, id) {
   return db("grants").where({ id }).first().update(changes);
 }
 
