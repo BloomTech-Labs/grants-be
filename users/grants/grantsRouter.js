@@ -34,8 +34,8 @@ router.get("/", (req, res) => {
 
 //get a grant by grant_id
 router.get("/:grantId", (req, res) => {
-  const { grantId } = req.params;
-  Grants.findSingleGrantBy(grantId)
+  const id = req.params.grantId;
+  Grants.findSingleGrantBy(id)
     .then((grant) => {
       res.status(200).json({
         grant,

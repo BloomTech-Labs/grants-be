@@ -47,7 +47,7 @@ async function addGrant(grant) {
 
 //updates data on a grant
 function updateGrant(changes, grant_id) {
-  return db("grants").where({ grant_id }).first().update(changes);
+  return db("grants").where({ id }).first().update(changes);
 }
 
 //function to delete a grant
