@@ -17,7 +17,10 @@ router.post("/new", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).json(error);
+      res.status(500).json({
+        message: "error posting new grant",
+        error: error,
+      });
     });
 });
 
@@ -29,13 +32,18 @@ router.get("/", (req, res) => {
     .then((grants) => {
       res.json(grants);
     })
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      res.status(500).json({
+        message: "error retrieving all grants",
+        error: err,
+      });
+    });
 });
 
 //get a grant by grant_id
 router.get("/:grantId", (req, res) => {
-  const { grantId } = req.params;
-  Grants.findSingleGrantBy(grantId)
+  const id = req.params.grantId;
+  Grants.findSingleGrantBy(id)
     .then((grant) => {
       res.status(200).json({
         grant,
@@ -43,7 +51,7 @@ router.get("/:grantId", (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({
-        message: "there's been an issue getting list of grants",
+        message: `there's been an issue getting grant ${id}`,
         error: err,
       });
     });
@@ -51,12 +59,12 @@ router.get("/:grantId", (req, res) => {
 
 //put update a grant info
 router.put("/:grantId", restricted, (req, res) => {
-  const { grantId } = req.params;
+  const id = req.params.grantId;
   const changes = req.body;
-  Grants.updateGrant(changes, grantId)
+  Grants.updateGrant(changes, id)
     .then((updated) => {
       res.status(204).json({
-        recordsUpdated: updated,
+        Updated_grant: updated,
       });
     })
     .catch((err) => {
@@ -100,25 +108,6 @@ router.get("/user/:userId/", restricted, (req, res) => {
         error: err,
       })
     );
-});
-
-//get all grants by user_id
-router.get("/user/:userId/:grantId", (req, res) => {
-  //Do we need this? I DUNNO!!!!
-  //   const grantId = req.params.grantId;
-  //   const userId = req.params.userId;
-  //   Grants.findSingleGrantBy(grantId)
-  //     .then((grant) => {
-  //       res.status(200).json({
-  //         grant,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       res.status(500).json({
-  //         message: "there's been an issue getting list of grants",
-  //         error: err,
-  //       });
-  //     });
 });
 
 module.exports = router;
