@@ -30,16 +30,19 @@ function findWritersProfile() {
   return db("writer_profiles");
 }
 
-//returns a specific writer  profile or null
-function findWriterProfileById(writer_id) {
-  return db("writer_profiles").where({ writer_id }).first();
+// returns a specific writer  profile or null
+async function findWriterProfileById(writer_id) {
+  const writer = await db("writer_profiles").where({ writer_id }).first();
+  const workHistory = await findWorkHistoryById(writer_id);
+  return { ...writer, workHistory };
 }
+
 //returns  a  writer profile by filter
 function findWriterProfileBy(filter) {
   return db("writer_profiles").where(filter).first();
 }
 
-//adds new writer profile. This is only to be used during the onboarding process, 
+//adds new writer profile. This is only to be used during the onboarding process,
 // function is inserted into add function in bothUserTypeModel file.
 async function addWriterProfile(id) {
   const defaultData = {
