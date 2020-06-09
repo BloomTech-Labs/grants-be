@@ -43,7 +43,7 @@ function findSingleGrantBy(filter) {
 async function addGrant(grant) {
   const [grantId] = await db("grants").insert(grant, "id");
 
-  return findGrantsById(grantId);
+  return findSingleGrantById(grantId);
 }
 
 //updates data on a grant
