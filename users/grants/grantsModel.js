@@ -15,19 +15,19 @@ module.exports = {
 
 //returns all grants details
 function findGrants(status) {
-  return db("grants");
+  return db("grants").orderBy("id", "asc");
 }
 
 //returns a specific grant profile or null
 function findGrantsByUser(applicant_profile_id) {
-  return db("grants").where({ applicant_profile_id });
+  return db("grants").where({ applicant_profile_id }).orderBy("id", "asc");
 }
 //returns ALL grants by filter
 function findGrantsBy(filter) {
   return db("grants").where(filter);
 }
 function findGrantsByStatus(status) {
-  return db("grants").where({ status });
+  return db("grants").where({ status }).orderBy("id", "asc");
 }
 //returns a specific grant profile or null
 function findSingleGrantById(id) {
