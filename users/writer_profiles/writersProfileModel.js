@@ -23,6 +23,7 @@ module.exports = {
   deleteWorkHistory,
   addWriterSavedGrant,
   getWriterSavedGrant,
+  deleteWriterSavedGrant,
 };
 
 //returns all writers user type profiles
@@ -166,14 +167,29 @@ async function deleteWorkHistory(workHistId, userId) {
 
 //add a grant to writers saved list
 async function addWriterSavedGrant(writer_id, grant_id) {
-  const id = await db("writer_saved_grants").insert(writer_id, grant_id);
+  await db("writer_saved_grants").insert(writer_id, grant_id);
   return {
     message: `Success, grant id ${grant_id} was favorited by user id ${writer_id}.`,
-    id,
   };
-  // return id;
 }
 
 function getWriterSavedGrant(writer_id) {
-  return db("writer_saved_grants as wsg").where("wsg.writer-id", writer_id);
+  return db("writer_saved_grants as wsg")
+    .where("wsg.writer_id", writer_id)
+    .join("grants as g", "g.id", "wsg.grant_id")
+    .select(
+      "wsg.writer_id",
+      "wsg.grant_id",
+      "g.applicat_profile_id as applicant_id",
+      "g.contact_name",
+      "g.org_name",
+      "g.grant_name",
+      "g.due_date",
+      "g.sector",
+      "g.description"
+    );
+}
+
+function deleteWriterSavedGrant(writer_id, grant_id) {
+  return db("writer_saved_grants").where({ writer_id, grant_id }).del();
 }
