@@ -13,11 +13,6 @@ router.get("/", restricted, (req, res) => {
     .catch((err) => res.send(err));
 });
 
-router.get("/saved-grants/", (req, res) => {
-  Writers.getWriterSavedGrant()
-    .then((favorites) => res.send({ favorites: favorites }))
-    .catch((err) => res.send({ error: err.message, message: "it was me" }));
-});
 //get a writer  profile by id
 router.get("/:userId", checkUserId, (req, res) => {
   const { userId } = req.params;
@@ -313,26 +308,38 @@ router.delete("/:id/work/:workHistId", (req, res) => {
   });
 });
 
+// *** WRITER FAVORITE GRANTS ROUTER ***
+
 // this post doesn't need a body, when passed the valid id's in the params it will create the appropriate new record
 router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
   const { writer_id } = req.params;
   const { grant_id } = req.params;
-  // console.log(writer_id, grant_id);
-  Writers.addWriterSavedGrant(Number(writer_id), Number(grant_id))
+  Writers.deleteWriterSavedGrant(Number(writer_id), Number(grant_id))
     .then((success) =>
       res.send({
         message: success,
-        another: "from /:writer_id/saved-grants/:grant_id",
       })
     )
-    // .then((success) => console.log(`success: `, success))
     .catch((err) => res.send({ error: err.message }));
 });
 
-router.get("/saved-grants/", (req, res) => {
-  Writers.getWriterSavedGrant()
-    .then((favorites) => res.send({ favorites: favorites }))
+router.get("/:id/saved-grants/", checkUserId, (req, res) => {
+  const { id } = req.params;
+  Writers.getWriterSavedGrant(Number(id))
+    .then((favorites) => res.send(favorites))
     .catch((err) => res.send({ error: err.message, message: "it was me" }));
+});
+
+router.delete("/:writer_id/saved-grants/:grant_id", (req, res) => {
+  const { writer_id } = req.params;
+  const { grant_id } = req.params;
+  Writers.deleteWriterSavedGrant(Number(writer_id), Number(grant_id))
+    .then((success) =>
+      res.send({
+        message: `Grant ID ${grant_id} removed from favorites`,
+      })
+    )
+    .catch((err) => res.send({ error: err.message }));
 });
 
 module.exports = router;
