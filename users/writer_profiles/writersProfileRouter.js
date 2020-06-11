@@ -323,7 +323,7 @@ router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
     .catch((err) => res.send({ error: err.message }));
 });
 
-router.get("/:id/saved-grants/", checkUserId, (req, res) => {
+router.get("/:id/saved-grants/", (req, res) => {
   const { id } = req.params;
   Writers.getWriterSavedGrant(Number(id))
     .then((favorites) => res.send(favorites))
