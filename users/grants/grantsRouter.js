@@ -101,7 +101,7 @@ router.get("/user/:userId/", restricted, (req, res) => {
       res.json(grants);
     })
     .catch((err) =>
-      res.send({
+      res.status(500).json({
         message: "error returning grants by user",
         error: err,
       })
