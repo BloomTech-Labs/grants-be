@@ -1,13 +1,18 @@
 const db = require("../../knex/knex.js");
-
+const grantsModel = require("../grants/grantsModel");
 //returns all applicant user type profiles
 function findApplicantProfiles() {
   return db("applicant_profiles");
 }
 
 //returns specific applicant profile
-function findApplicantProfileById(applicant_id) {
-  return db("applicant_profiles").where({ applicant_id }).first();
+async function findApplicantProfileById(applicant_id) {
+  const applicant = await db("applicant_profiles")
+    .where({ applicant_id })
+    .first();
+  const grants = await grantsModel.findGrantsByUser(applicant_id);
+
+  return { ...applicant, grants };
 }
 
 //returns applicant profile by dynamic filter
