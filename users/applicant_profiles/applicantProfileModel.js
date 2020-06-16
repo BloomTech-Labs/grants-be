@@ -10,7 +10,9 @@ async function findApplicantProfileById(applicant_id) {
   const applicant = await db("applicant_profiles")
     .where({ applicant_id })
     .first();
-  const grants = await grantsModel.findGrantsByUser(applicant_id);
+  const applicant_profile_id = applicant.id;
+  const grants = await grantsModel.findGrantsByUser(applicant_profile_id);
+
 
   return { ...applicant, grants };
 }
