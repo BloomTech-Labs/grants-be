@@ -13,6 +13,7 @@ async function findApplicantProfileById(applicant_id) {
   const applicant_profile_id = applicant.id;
   const grants = await grantsModel.findGrantsByUser(applicant_profile_id);
 
+
   return { ...applicant, grants };
 }
 
