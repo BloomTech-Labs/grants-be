@@ -180,7 +180,6 @@ function getWriterSavedGrant(writer_id) {
     .select(
       "wsg.writer_id",
       "wsg.grant_id",
-      "g.applicat_profile_id as applicant_id",
       "g.contact_name",
       "g.org_name",
       "g.grant_name",
