@@ -15,7 +15,9 @@ router.get("/", restricted, (req, res) => {
 
 //get a writer  profile by id
 router.get("/:userId", checkUserId, (req, res) => {
-  const { userId } = req.params;
+  const {
+    userId
+  } = req.params;
 
   Writers.findWriterProfileById(userId)
     .then((profile) => {
@@ -33,7 +35,9 @@ router.get("/:userId", checkUserId, (req, res) => {
 
 //put update a writer profile info
 router.put("/:userId", restricted, (req, res) => {
-  const { userId } = req.params;
+  const {
+    userId
+  } = req.params;
   const changes = req.body;
 
   Writers.updateWriterProfile(changes, userId)
@@ -83,7 +87,9 @@ router.get("/services", (req, res) => {
 
 //get all services from one specific user by profile id
 router.get("/services/:id", (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
 
   Writers.findWriterServicesById(id)
     .then((services) => {
@@ -105,7 +111,9 @@ router.get("/services/:id", (req, res) => {
 
 //add service to user profile...writer profile id in params
 router.post("/services/:id", (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   const service = {
     writer_profile_id: id,
     service_offered: req.body,
@@ -144,7 +152,9 @@ router.put("/services/:id", (req, res) => {
 
 //delete existing service from writer profile...uses service id in params
 router.delete("/services/:service_id", (req, res) => {
-  const { service_id } = req.params;
+  const {
+    service_id
+  } = req.params;
 
   Writers.deleteWriteProfile(service_id)
     .then((service) => {
@@ -164,7 +174,9 @@ router.delete("/services/:service_id", (req, res) => {
 
 //add new writer education data
 router.post("/edu/:id", (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   const eduData = {
     writer_id: id,
     college: req.params,
@@ -188,7 +200,9 @@ router.post("/edu/:id", (req, res) => {
 
 //get specific writer's education data by user id
 router.get("/edu/:id", (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
 
   Writers.findWriterEducationById(id)
     .then((educations) => {
@@ -210,7 +224,9 @@ router.get("/edu/:id", (req, res) => {
 
 //updates existing educationa history record, takes education record id (primary key) in params
 router.put("/edu/:educationId", (req, res) => {
-  const { educationId } = req.params;
+  const {
+    educationId
+  } = req.params;
   const changes = req.body;
 
   Writers.updateWriterEducation(changes, educationId)
@@ -228,7 +244,9 @@ router.put("/edu/:educationId", (req, res) => {
 
 //deletes existing education record, uses education record id (primary key).
 router.delete("/edu/:educationId", (req, res) => {
-  const { educationId } = req.params;
+  const {
+    educationId
+  } = req.params;
 
   Writers.deleteWriterEducation(educationId)
     .then((education) => {
@@ -248,7 +266,9 @@ router.delete("/edu/:educationId", (req, res) => {
 
 //adds new work history record to user - returns writers entire array of jobs
 router.post("/:id/work/", (req, res) => {
-  const { body } = req;
+  const {
+    body
+  } = req;
   Writers.addWorkHistory(body)
     .then((work) => {
       res.status(201).json(work);
@@ -263,7 +283,9 @@ router.post("/:id/work/", (req, res) => {
 
 //get work history for specific user, user id required in params
 router.get("/:id/work/", (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
 
   Writers.findWorkHistoryById(id)
     .then((workHistories) => {
@@ -285,7 +307,9 @@ router.get("/:id/work/", (req, res) => {
 
 //update existing user work history record, work history id required in params - returns updated array
 router.put("/:id/work/:workHistId", (req, res) => {
-  const { workHistId } = req.params;
+  const {
+    workHistId
+  } = req.params;
   const changes = req.body;
 
   Writers.updateWorkHistory(changes, workHistId)
@@ -300,8 +324,12 @@ router.put("/:id/work/:workHistId", (req, res) => {
 
 //delete existing work history, requires work history id in params.
 router.delete("/:id/work/:workHistId", (req, res) => {
-  const { workHistId } = req.params;
-  const { id } = req.params;
+  const {
+    workHistId
+  } = req.params;
+  const {
+    id
+  } = req.params;
 
   Writers.deleteWorkHistory(workHistId, id).then((workHistory) => {
     res.status(200).json(workHistory);
@@ -312,34 +340,52 @@ router.delete("/:id/work/:workHistId", (req, res) => {
 
 // this post doesn't need a body, when passed the valid id's in the params it will create the appropriate new record
 router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
-  const { writer_id } = req.params;
-  const { grant_id } = req.params;
+  const {
+    writer_id
+  } = req.params;
+  const {
+    grant_id
+  } = req.params;
   Writers.addWriterSavedGrant(Number(writer_id), Number(grant_id))
     .then((success) =>
       res.send({
         message: success,
       })
     )
-    .catch((err) => res.send({ error: err.message }));
+    .catch((err) => res.send({
+      error: err.message
+    }));
 });
 
 router.get("/:id/saved-grants/", (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   Writers.getWriterSavedGrant(Number(id))
     .then((favorites) => res.send(favorites))
-    .catch((err) => res.send({ error: err.message, message: "it was me" }));
+    .catch((err) => res.send({
+      error: err.message,
+      message: "it was me"
+    }));
+  console.log(favorites);
 });
 
 router.delete("/:writer_id/saved-grants/:grant_id", (req, res) => {
-  const { writer_id } = req.params;
-  const { grant_id } = req.params;
+  const {
+    writer_id
+  } = req.params;
+  const {
+    grant_id
+  } = req.params;
   Writers.deleteWriterSavedGrant(Number(writer_id), Number(grant_id))
     .then((success) =>
       res.send({
         message: `Grant ID ${grant_id} removed from favorites`,
       })
     )
-    .catch((err) => res.send({ error: err.message }));
+    .catch((err) => res.send({
+      error: err.message
+    }));
 });
 
 module.exports = router;
