@@ -367,7 +367,6 @@ router.get("/:id/saved-grants/", (req, res) => {
       error: err.message,
       message: "it was me"
     }));
-  console.log(favorites);
 });
 
 router.delete("/:writer_id/saved-grants/:grant_id", (req, res) => {
