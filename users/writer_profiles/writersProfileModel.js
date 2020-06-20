@@ -33,9 +33,14 @@ function findWritersProfile() {
 
 // returns a specific writer  profile or null
 async function findWriterProfileById(writer_id) {
-  const writer = await db("writer_profiles").where({ writer_id }).first();
+  const writer = await db("writer_profiles").where({
+    writer_id
+  }).first();
   const workHistory = await findWorkHistoryById(writer_id);
-  return { ...writer, workHistory };
+  return {
+    ...writer,
+    workHistory
+  };
 }
 
 //returns  a  writer profile by filter
@@ -66,12 +71,16 @@ async function addWriterProfile(id) {
 
 //updates data on a writer user profile
 function updateWriterProfile(changes, writer_id) {
-  return db("writer_profiles").where({ writer_id }).first().update(changes);
+  return db("writer_profiles").where({
+    writer_id
+  }).first().update(changes);
 }
 
 //function to delete a writer user profile
 function deleteWriteProfile(writer_id) {
-  return db("writer_profiles").where({ writer_id }).del();
+  return db("writer_profiles").where({
+    writer_id
+  }).del();
 }
 
 // *** WRITER SERVICES OFFERED HELPER FUNCTIONS ***
@@ -83,7 +92,9 @@ function findWriterServices() {
 
 //returns writer services for specific writer profile
 function findWriterServicesById(writer_profile_id) {
-  return db("writer_services_offered").where({ writer_profile_id });
+  return db("writer_services_offered").where({
+    writer_profile_id
+  });
 }
 
 //add new service to writer profile, returns updated list of writer services.
@@ -98,7 +109,9 @@ async function addWriterService(service) {
 //updates existing writer service on writer profile
 function updateWriterService(changes, writer_profile_id) {
   return db("writer_services_offered")
-    .where({ writer_profile_id })
+    .where({
+      writer_profile_id
+    })
     .first()
     .update(changes);
 }
@@ -131,7 +144,9 @@ function findWriterEducations() {
 
 //update existing writer education data based on education data primary key id (not user id)
 function updateWriterEducation(changes, id) {
-  return db("writer_educations").where({ id }).first().update(changes);
+  return db("writer_educations").where({
+    id
+  }).first().update(changes);
 }
 
 //deletes existing writer educate based on education data primary key id (not user id)
@@ -174,21 +189,25 @@ async function addWriterSavedGrant(writer_id, grant_id) {
 }
 
 function getWriterSavedGrant(writer_id) {
-  return db("writer_saved_grants as wsg")
-    .where("wsg.writer_id", writer_id)
-    .join("grants as g", "g.id", "wsg.grant_id")
+  return db("writer_saved_grants")
+    .join("grants", "grants.id", "writer_saved_grants.grant_id")
     .select(
-      "wsg.writer_id",
-      "wsg.grant_id",
-      "g.contact_name",
-      "g.org_name",
-      "g.grant_name",
-      "g.due_date",
-      "g.sector",
-      "g.description"
-    );
+      "writer_saved_grants.writer_id",
+      "writer_saved_grants.grant_id",
+      "grants.contact_name",
+      "grants.org_name",
+      "grants.grant_name",
+      "grants.due_date",
+      "grants.sector",
+      "grants.description"
+    )
+    .where("writer_saved_grants.writer_id", writer_id);
+
 }
 
 function deleteWriterSavedGrant(writer_id, grant_id) {
-  return db("writer_saved_grants").where({ writer_id, grant_id }).del();
+  return db("writer_saved_grants").where({
+    writer_id,
+    grant_id
+  }).del();
 }
