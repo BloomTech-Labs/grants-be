@@ -346,7 +346,7 @@ router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
   const {
     grant_id
   } = req.params;
-  Writers.addWriterSavedGrant(writer_id, grant_id)
+  Writers.addWriterSavedGrant((writer_id), (grant_id))
     .then((success) =>
       res.send({
         message: success,
