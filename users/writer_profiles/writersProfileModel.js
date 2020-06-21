@@ -194,7 +194,7 @@ function getWriterSavedGrant(writer_id) {
     .select(
       "writer_saved_grants.writer_id",
       "writer_saved_grants.grant_id",
-      "grants.org_name",
+      "grants.awarding_agency",
       "grants.grant_name",
       "grants.due_date",
       "grants.sector",
