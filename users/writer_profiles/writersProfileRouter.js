@@ -347,11 +347,9 @@ router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
     grant_id
   } = req.params;
   Writers.addWriterSavedGrant(Number(writer_id), Number(grant_id))
-    .then((success) =>
-      res.send({
-        message: success,
-      })
-    )
+    .then((success) => {
+      res.status(201).json(success);
+    })
     .catch((err) => res.send({
       error: err.message
     }));
