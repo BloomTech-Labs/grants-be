@@ -182,7 +182,7 @@ async function deleteWorkHistory(workHistId, userId) {
 
 //add a grant to writers saved list
 async function addWriterSavedGrant(writer_id, grant_id) {
-  await db("writer_saved_grants").insert(writer_id, grant_id, "id");
+  await db("writer_saved_grants").insert(writer_id, grant_id);
   return {
     message: `Success, grant id ${grant_id} was favorited by user id ${writer_id}.`,
   };

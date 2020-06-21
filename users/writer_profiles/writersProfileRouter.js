@@ -346,7 +346,7 @@ router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
   const {
     grant_id
   } = req.params;
-  Writers.addWriterSavedGrant(Number(writer_id), Number(grant_id))
+  Writers.addWriterSavedGrant(writer_id, grant_id)
     .then((success) =>
       res.send({
         message: success,
@@ -361,7 +361,7 @@ router.get("/:id/saved-grants/", (req, res) => {
   const {
     id
   } = req.params;
-  Writers.getWriterSavedGrant(Number(id))
+  Writers.getWriterSavedGrant(id)
     .then((favorites) => res.send(favorites))
     .catch((err) => res.send({
       error: err.message,
