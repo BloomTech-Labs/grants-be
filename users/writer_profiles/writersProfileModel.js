@@ -69,7 +69,7 @@ async function addWriterProfile(id) {
 
     const [profileId] = await db("writer_profiles").insert(defaultData, "id");
 
-    return findWriterProfileById(profileId);
+    return findWriterProfileById(id);
 }
 
 //updates data on a writer user profile

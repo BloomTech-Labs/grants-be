@@ -11,6 +11,12 @@ const user = {
     user_type: "writer",
 };
 
+const userTwo = {
+    email: "email@email.com",
+    password: "password",
+    user_type: "writer",
+};
+
 // const newWriter = {
 //     first_name: "Peter",
 //     last_name: "Smith",
@@ -47,12 +53,10 @@ afterAll(() => {
 
 describe("writers models", () => {
     beforeEach(async () => {
-        // await db("writer_profiles").del();
         await db.raw("truncate table writer_profiles cascade");
     });
     test("adds a writer profile ", async () => {
         const added = await writerProfiles.addWriterProfile(createdUserId);
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", added);
         expect(added.writer_id).toEqual(createdUserId);
         const found = await db("writer_profiles")
             .where({ writer_id: createdUserId })
@@ -83,11 +87,23 @@ describe("writers models", () => {
             createdUserId
         );
         expect(profile).toBe(undefined);
-        // const added = await writerProfiles.addWriterProfile(createdUserId);
-        // console.log("!!!!!!", added);
-        // const foundProfile = await writerProfiles.findWriterProfileById(
-        //     createdUserId
-        // );
-        // expect(foundProfile).toMatchObject(added);
+        const added = await writerProfiles.addWriterProfile(createdUserId);
+        const foundProfile = await writerProfiles.findWriterProfileById(
+            createdUserId
+        );
+        expect(foundProfile).toMatchObject(added);
+    });
+    test("deletes writer profile by id", async () => {
+        const addedFirst = await writerProfiles.addWriterProfile(createdUserId);
+        const createdUserNumberTwo = (
+            await db("users").insert(userTwo, "id")
+        )[0];
+        const addedSecond = await writerProfiles.addWriterProfile(
+            createdUserNumberTwo
+        );
+        await writerProfiles.deleteWriteProfile(createdUserId);
+        const profiles = await writerProfiles.findWritersProfile();
+        expect(profiles.length).toBe(1);
+        expect(addedSecond).toMatchObject(profiles[0]);
     });
 });
