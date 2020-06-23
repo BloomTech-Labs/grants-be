@@ -200,19 +200,20 @@ async function addWriterSavedGrant(writer_id, grant_id) {
 }
 
 function getWriterSavedGrant(writer_id) {
-    return db("writer_saved_grants")
-        .join("grants", "grants.id", "writer_saved_grants.grant_id")
-        .select(
-            "writer_saved_grants.writer_id",
-            "writer_saved_grants.grant_id",
-            "grants.contact_name",
-            "grants.org_name",
-            "grants.grant_name",
-            "grants.due_date",
-            "grants.sector",
-            "grants.description"
-        )
-        .where("writer_saved_grants.writer_id", writer_id);
+
+  return db("writer_saved_grants")
+    .join("grants", "grants.id", "writer_saved_grants.grant_id")
+    .select(
+      "writer_saved_grants.writer_id",
+      "writer_saved_grants.grant_id",
+      "grants.awarding_agency",
+      "grants.grant_name",
+      "grants.due_date",
+      "grants.sector",
+      "grants.description"
+    )
+    .where("writer_saved_grants.writer_id", writer_id);
+
 }
 
 function deleteWriterSavedGrant(writer_id, grant_id) {

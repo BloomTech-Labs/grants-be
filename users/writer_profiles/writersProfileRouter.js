@@ -347,26 +347,31 @@ router.post("/:writer_id/saved-grants/:grant_id", (req, res) => {
     grant_id
   } = req.params;
   Writers.addWriterSavedGrant(Number(writer_id), Number(grant_id))
-    .then((success) =>
-      res.send({
-        message: success,
-      })
-    )
-    .catch((err) => res.send({
-      error: err.message
-    }));
+    .then((success) => {
+      res.status(201).json(success);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err.message,
+        message: "it was me"
+      });
+    });
 });
 
 router.get("/:id/saved-grants/", (req, res) => {
   const {
     id
   } = req.params;
-  Writers.getWriterSavedGrant(Number(id))
-    .then((favorites) => res.send(favorites))
-    .catch((err) => res.send({
-      error: err.message,
-      message: "it was me"
-    }));
+  Writers.getWriterSavedGrant(id)
+    .then((favorites) => {
+      res.status(201).json(favorites);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err.message,
+        message: "it was me"
+      });
+    });
 });
 
 router.delete("/:writer_id/saved-grants/:grant_id", (req, res) => {
