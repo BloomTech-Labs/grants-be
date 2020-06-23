@@ -42,6 +42,15 @@ To get the server running locally:
 | GET    | `/:userId` | yes             | Returns specific writer profile |
 | PUT    | `/:userId` | yes             | Updates writer profile          |
 
+#### Writer Profile Work History Routes (base URL + `api/writers/:writer_id/work`)
+
+| Method | Endpoint          | Token Required? | Description                     |
+| ------ | ----------------- | --------------- | ------------------------------- |
+| GET    | `/`               | yes             | Returns work history for writer |
+| POST   | `/`               | yes             | Adds a work history by id       |
+| PUT    | `/:workHistoryId` | yes             | Updates a work history by id    |
+| DELETE | `/:workHistoryId` | yes             | Deletes writer profile          |
+
 #### Applicant Profile Routes (base URL + `api/applicants`)
 
 | Method | Endpoint   | Token Required? | Description                        |
@@ -92,7 +101,8 @@ To get the server running locally:
   country: STRING,
   sector: STRING,
   website: STRING,
-  bio: STRING
+  bio: STRING,
+  work_history: ARRAY
 }
 
 ```
@@ -115,7 +125,8 @@ To get the server running locally:
   website: STRING,
   bio: STRING,
   org_name: STRING optional,
-  founding_date: DATE optional
+  founding_date: DATE optional,
+  grants: ARRAY
 }
 
 ```
@@ -163,6 +174,12 @@ To get the server running locally:
 `updateWriterProfile(writer_id, updatedData)` -> Update writer profile by writer ID
 
 `deleteWriterProfile(writer_id)` -> Delete writer profile by ID
+
+`addWorkHistory(body)` -> Adds new work history to an existing writer, returns updated writer profile object
+
+`updateWorkHistory(writer_id, updatedData)` -> Update work history to an existing writer, returns updated writer profile object
+
+`deleteWorkHistory(workHistId, writer_id)` -> Delete a work history writer by ID
 
 ##### Applicant Profiles
 
