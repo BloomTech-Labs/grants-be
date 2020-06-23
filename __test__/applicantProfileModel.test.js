@@ -56,12 +56,13 @@ describe("applicant profile queries", () => {
         it("returns applicant profile info by user id", async () => {
             await Users.add(userData[0]);
             await Users.add(userData[1]);
-            await Users.add(userData[2]);
+            const user_three = await Users.add(userData[2]);
 
-            const appProf3 = await Applicants.findApplicantProfileById(3);
+            const appProf3 = await Applicants.findApplicantProfileById(
+                user_three.id
+            );
 
-            expect(appProf3.id).toBe(3);
-            expect(appProf3.id).not.toBe(2);
+            expect(appProf3.applicant_id).toBe(user_three.id);
         });
 
         it("returns applicant profile(s) by dynamic filter", async () => {
