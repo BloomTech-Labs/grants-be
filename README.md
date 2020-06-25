@@ -1,19 +1,33 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/5c0e781b8d1d6d032057/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/grants-be/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5c0e781b8d1d6d032057/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/grants-be/test_coverage)
 
-# API Documentation
+# Granted API Documentation
 
-## 1️⃣ Backend delpoyed at [https://grantedbackend.herokuapp.com/](https://grantedbackend.herokuapp.com/) <br>
+#### Back End delpoyed and hosted [via Heroku](https://grantedbackend.herokuapp.com/) <br>
 
-## 1️⃣ Getting started
+#### Deployed Site: [Granted](http://www.writemygrants.net)
+
+## Environment Variables
+
+In order for the app to function correctly, the user must set up their own environment variables.
+
+create a .env file that includes the following:
+
+- `PORT` - for local server settings
+- `JWT_SECRET` - secret for token verification
+
+- `DATABASE_URL` - set to the path your locally hosted version of the postgres database
+- `TEST_DATABASE_URL` - optional for a duplicate local database (empty) for testing purposes
+
+## Getting started
 
 To get the server running locally:
 
 - Clone this repo
-- **npm install** to install all required dependencies
-- add **.env** file for local environmental variables
-- **npm server** to start the local server
-- **npm test** to start server using testing environment
+- `npm install` to install all required dependencies
+- add `.env` file for local environmental variables
+- `npm server` to start the local server
+- `npm test` to start server using testing environment
 
 ### Framework
 
@@ -25,7 +39,7 @@ To get the server running locally:
 - Jsonwebtoken
 - Bcryptjs
 
-## 2️⃣ Endpoints
+## Endpoints
 
 #### Auth Routes (base URL + `api/auth`)
 
@@ -72,7 +86,7 @@ To get the server running locally:
 
 # Data Model
 
-#### 2️⃣ USER REGISTRATION
+#### USER REGISTRATION
 
 ---
 
@@ -149,7 +163,7 @@ To get the server running locally:
   },
 ```
 
-## 2️⃣ Actions
+## Actions
 
 ##### Users
 
@@ -211,18 +225,6 @@ To get the server running locally:
 
 `deleteGrant(id)` -> Deletes a single grant by the grant id.
 
-## 3️⃣ Environment Variables
-
-In order for the app to function correctly, the user must set up their own environment variables.
-
-create a .env file that includes the following:
-
-_ PORT - for local server settings
-_ JWT\*SECRET - secret for token verification
-
-- DATABASE\*URL - set to the path your locally hosted version of the postgres database
-- TEST_DATABASE_URL - optional for a duplicate local database (empty) for testing purposes
-
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
@@ -260,6 +262,6 @@ Remember that this project is licensed under the MIT license, and by submitting 
 
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
 
-## Documentation
+## Front End
 
-See [Frontend Documentation](https://github.com/Lambda-School-Labs/grants-fe/blob/master/README.md) for details on the fronend of our project.
+See [Front End Repo](https://github.com/Lambda-School-Labs/grants-fe/blob/master/README.md) for details on the fronend of our project.
